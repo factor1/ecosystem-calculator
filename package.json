@@ -1,0 +1,29 @@
+{
+  "name": "gpsinsight-savings-calculator",
+  "version": "0.0.1",
+  "description": "A saving calculator for GPS Insight",
+  "main": "build/index.js",
+  "repository": "https://github.com/factor1/gpsinsight-savings-calculator",
+  "author": "Eric Stout <ericwstout@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^2.6.1",
+    "@typescript-eslint/parser": "^2.6.1",
+    "eslint": "^6.6.0",
+    "eslint-plugin-react": "^7.16.0",
+    "parcel-bundler": "^1.12.4",
+    "typescript": "^3.7.2"
+  },
+  "dependencies": {
+    "@types/react": "^16.9.11",
+    "@types/react-dom": "^16.9.4",
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0",
+    "styled-components": "^4.4.1"
+  },
+  "scripts": {
+    "start": "parcel src/index.html --open",
+    "test": "tsc && eslint src/**/*"
+  }
+}
