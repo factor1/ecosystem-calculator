@@ -6,5 +6,6 @@ export const colors = {
   midGrey: "#949494",
   lightGrey: "rgba(148, 148, 148, 0.3)",
   green: "rgba(67, 160, 71, 1)",
-  lightPink: "rgba(224, 31, 40, 0.2)"
+  lightPink: "rgba(224, 31, 40, 0.2)",
+  blue: "#265D8D"
 };
