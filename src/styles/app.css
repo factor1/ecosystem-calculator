@@ -1,0 +1,9 @@
+* {
+  box-sizing: border-box;
+}
+
+body,
+html {
+  background-color: #ffffff;
+  font-family: "Lato", Helvetica, sans-serif;
+}
