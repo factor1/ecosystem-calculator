@@ -6,6 +6,7 @@ import "normalize.css";
 import "./styles/app.css";
 
 import Home from "./Home";
+import Calculate from "./Calculate";
 
 const App: React.FC = () => {
   return (
@@ -13,7 +14,7 @@ const App: React.FC = () => {
       <ContextProvider>
         <Router>
           <Route exact path="/" component={Home} />
-          <Route exact path="/calculate" render={() => <div>calculate</div>} />
+          <Route exact path="/calculate" component={Calculate} />
         </Router>
       </ContextProvider>
     </div>

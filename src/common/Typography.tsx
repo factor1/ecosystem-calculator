@@ -35,10 +35,10 @@ export const Heading3: React.FC<TypographyProps> = ({
 }) => {
   const Heading = styled.h3`
     margin: 0 auto 12px;
-    font: 400 24px/29px Lato;
+    font: 300 48px/57px Lato;
     text-align: ${textAlign};
-    letter-spacing: 0.6px;
-    color: ${color ? color : colors.blue};
+    letter-spacing: 1.2px;
+    color: ${color ? color : colors.black};
   `;
 
   return <Heading className={className}>{children}</Heading>;
@@ -55,6 +55,23 @@ export const Heading4: React.FC<TypographyProps> = ({
     letter-spacing: 0.6px;
     text-align: ${textAlign};
     color: ${color ? color : colors.midGrey};
+  `;
+
+  return <Heading className={className}>{children}</Heading>;
+};
+
+export const Heading5: React.FC<TypographyProps> = ({
+  children,
+  textAlign = "center",
+  className,
+  color
+}) => {
+  const Heading = styled.h5`
+    margin: 0 auto 12px;
+    font: 400 24px/29px Lato;
+    text-align: ${textAlign};
+    letter-spacing: 0.6px;
+    color: ${color ? color : colors.blue};
   `;
 
   return <Heading className={className}>{children}</Heading>;

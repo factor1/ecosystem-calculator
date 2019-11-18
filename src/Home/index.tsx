@@ -5,7 +5,7 @@ import { Formik, Form, Field } from "formik";
 
 import { CalculatorContext } from "../GlobalContext";
 import { colors } from "../styles/theme";
-import { Heading2, Heading3 } from "../common/Typography";
+import { Heading2, Heading5 } from "../common/Typography";
 import Card from "../common/Card";
 import CardInput from "./CardInput";
 import Button from "../common/Button";
@@ -50,21 +50,18 @@ const HelperText = styled.span`
 `;
 
 interface Props {
-  setFleetSize: (value: number) => void;
-  setAverageWage: (value: number) => void;
+  history: {
+    push: (value: string) => void;
+  };
 }
 
-const Home: React.FC<Props> = () => {
+const Home: React.FC<Props> = ({ history: { push } }) => {
   const { setFleetSize, setAverageWage } = useContext(CalculatorContext);
-
-  const handleCalculate = () => {
-    return null;
-  };
 
   return (
     <Container>
       <Heading2>Savings Calculator</Heading2>
-      <Heading3>Discover how much GPS Insight can save your fleet.</Heading3>
+      <Heading5>Discover how much GPS Insight can save your fleet.</Heading5>
       <Formik
         initialValues={{
           fleetSize: "",
@@ -79,10 +76,10 @@ const Home: React.FC<Props> = () => {
             .required("Average wage is required")
         })}
         onSubmit={(values, actions) => {
-          console.log(values);
           setFleetSize(values.fleetSize);
           setAverageWage(values.averageWage);
           actions.setSubmitting(false);
+          return push("/calculate");
         }}
       >
         {({
