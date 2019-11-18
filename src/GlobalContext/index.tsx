@@ -1,4 +1,4 @@
-import React, { useState, ProviderProps, ProviderExoticComponent } from "react";
+import React, { useState } from "react";
 
 interface GlobalContextProps {
   children: React.ReactChild;
