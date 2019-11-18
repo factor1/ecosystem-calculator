@@ -171,7 +171,7 @@ class CurrencyInput extends Component {
         }}
         type={this.props.inputType}
         value={this.state.maskedValue}
-        onChange={this.handleChange}
+        // onChange={this.handleChange}
         onFocus={this.handleFocus}
         onMouseUp={this.handleFocus}
         {...this.state.customProps}
