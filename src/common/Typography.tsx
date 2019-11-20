@@ -80,12 +80,14 @@ export const Heading5: React.FC<TypographyProps> = ({
 export const Paragraph: React.FC<TypographyProps> = ({
   children,
   textAlign = "left",
-  className
+  className,
+  color
 }) => {
   const Text = styled.p`
     font: 400 16px/19px Lato;
     letter-spacing: 0.4px;
     text-align: ${textAlign};
+    color: ${color ? color : colors.black};
   `;
 
   return <Text className={className}>{children}</Text>;

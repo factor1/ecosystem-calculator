@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import ReactTooltip from "react-tooltip";
 
 import { colors } from "../styles/theme";
-import { FormikHandlers, FormikTouched, FormikErrors } from "formik";
+import { FormikTouched, FormikErrors } from "formik";
+import ToolTipIcon from "../common/ToolTipIcon";
 
 interface Props {
   label: string;
@@ -27,17 +27,6 @@ const Container = styled.div`
   justify-content: space-between;
   align-items: center;
   flex-flow: row nowrap;
-`;
-
-const TooltipIcon = styled.div`
-  display: flex;
-  position: relative;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  height: 100%;
-  width: 20px;
-  background: ${colors.lightGrey};
 `;
 
 const InputContainer = styled.div`
@@ -107,8 +96,7 @@ const TableInput: React.FC<Props> = ({
   return (
     <>
       <Container>
-        <TooltipIcon data-tip={tooltip} />
-        <ReactTooltip place="top" type="dark" effect="solid" />
+        <ToolTipIcon dataTip={tooltip} />
         <InputContainer>
           <Label htmlFor={id}>{label}</Label>
           <Input

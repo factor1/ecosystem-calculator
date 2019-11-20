@@ -58,8 +58,7 @@ interface Props {
 }
 
 const Home: React.FC<Props> = ({ history: { push } }) => {
-  const { setFleetSize, setAverageWage } = useContext(CalculatorContext);
-
+  const { handleInitialFormSubmit } = useContext(CalculatorContext);
   return (
     <Container>
       <Heading2>Savings Calculator</Heading2>
@@ -78,21 +77,12 @@ const Home: React.FC<Props> = ({ history: { push } }) => {
             .required("Average wage is required")
         })}
         onSubmit={(values, actions) => {
-          setFleetSize(values.fleetSize);
-          setAverageWage(values.averageWage);
+          handleInitialFormSubmit(values);
           actions.setSubmitting(false);
           return push("/calculate");
         }}
       >
-        {({
-          values,
-          errors,
-          touched,
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          isSubmitting
-        }) => (
+        {({ errors, touched, isSubmitting }) => (
           <Form>
             <CardContainer>
               <Card width={241}>

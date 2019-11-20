@@ -6,7 +6,8 @@ import * as Yup from "yup";
 import { Heading3, Heading5, Heading4 } from "../common/Typography";
 import { colors } from "../styles/theme";
 import TableInput from "./TableInput";
-import { CalculatorContext } from "~GlobalContext";
+import { CalculatorContext } from "../GlobalContext";
+import CostBreakdown from "./CostBreakdown";
 
 const Container = styled.div`
   display: flex;
@@ -133,7 +134,7 @@ const Caluclate: React.FC = () => {
           actions.setSubmitting(false);
         }}
       >
-        {({ errors, touched, isSubmitting, handleSubmit }) => (
+        {({ errors, touched, handleSubmit }) => (
           <Form style={{ width: "100%" }}>
             <FormWrapper>
               <Field
@@ -240,6 +241,7 @@ const Caluclate: React.FC = () => {
           </Form>
         )}
       </Formik>
+      <CostBreakdown />
     </Container>
   );
 };

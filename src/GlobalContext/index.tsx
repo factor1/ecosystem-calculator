@@ -8,7 +8,7 @@ interface GlobalContextProps {
 interface ContextState {
   fleetSize: number | null;
   averageWage: number | null;
-  fuelCost: number | null;
+  fuelCost: number | string | null;
   hoursWorkedPerDay: number | null;
   averageDailyMiles: number | null;
   daysWorkedPerMonth: number | null;
@@ -22,7 +22,7 @@ interface ContextState {
 interface ContextValues {
   fleetSize: number | null;
   averageWage: number | null;
-  fuelCost: number | null;
+  fuelCost: number | string | null;
   hoursWorkedPerDay: number | null;
   averageDailyMiles: number | null;
   daysWorkedPerMonth: number | null;
@@ -32,10 +32,11 @@ interface ContextValues {
   insuranceDeductible: number | null;
   accidentsPerYear: number | null;
   handleFormSubmit: (values: FormValues) => void;
+  handleInitialFormSubmit: (values: InitialFormValues) => void;
 }
 
 interface FormValues {
-  fuelCost: number | null;
+  fuelCost: number | string | null;
   hoursWorkedPerDay: number | null;
   averageDailyMiles: number | null;
   daysWorkedPerMonth: number | null;
@@ -44,6 +45,11 @@ interface FormValues {
   averageVehicleMPG: number | null;
   insuranceDeductible: number | null;
   accidentsPerYear: number | null;
+}
+
+interface InitialFormValues {
+  fleetSize: number;
+  averageWage: number;
 }
 
 export const CalculatorContext = React.createContext<ContextValues>({
@@ -58,7 +64,8 @@ export const CalculatorContext = React.createContext<ContextValues>({
   averageVehicleMPG: null,
   insuranceDeductible: null,
   accidentsPerYear: null,
-  handleFormSubmit: () => null
+  handleFormSubmit: () => null,
+  handleInitialFormSubmit: () => null
 });
 
 export class ContextProvider extends Component<
@@ -71,7 +78,7 @@ export class ContextProvider extends Component<
     this.state = {
       fleetSize: null,
       averageWage: null,
-      fuelCost: null,
+      fuelCost: 0,
       hoursWorkedPerDay: 8,
       averageDailyMiles: 80,
       daysWorkedPerMonth: 20,
@@ -92,11 +99,12 @@ export class ContextProvider extends Component<
       const response = await axios.get(
         "https://www.fueleconomy.gov/ws/rest/fuelprices"
       );
-      if (response && response.data && response.data.diesel) {
-        const fuelCost = Number(response.data.diesel);
+      console.log(response);
+      if (response && response.data && response.data.regular) {
+        const fuelCost = Number(response.data.regular).toFixed(2);
         return this.setState({ fuelCost });
       } else {
-        throw new Error("Could not get diesel pricing");
+        throw new Error("Could not get pricing");
       }
     } catch (error) {
       console.error("There was an error fetching fuel cost. ", error);
@@ -106,6 +114,9 @@ export class ContextProvider extends Component<
   handleFormSubmit = (values: FormValues) => {
     return this.setState({ ...values });
   };
+
+  handleInitialFormSubmit = (values: InitialFormValues) =>
+    this.setState({ ...values });
 
   render() {
     const {
@@ -135,7 +146,8 @@ export class ContextProvider extends Component<
           averageVehicleMPG,
           insuranceDeductible,
           accidentsPerYear,
-          handleFormSubmit: this.handleFormSubmit
+          handleFormSubmit: this.handleFormSubmit,
+          handleInitialFormSubmit: this.handleInitialFormSubmit
         }}
       >
         {this.props.children}
