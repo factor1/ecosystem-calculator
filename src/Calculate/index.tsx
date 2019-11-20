@@ -6,6 +6,7 @@ import * as Yup from "yup";
 import { Heading3, Heading5, Heading4 } from "../common/Typography";
 import { colors } from "../styles/theme";
 import TableInput from "./TableInput";
+import { CalculatorContext } from "~GlobalContext";
 
 const Container = styled.div`
   display: flex;
@@ -60,6 +61,18 @@ const FormWrapper = styled.div`
 `;
 
 const Caluclate: React.FC = () => {
+  const {
+    hoursWorkedPerDay,
+    averageDailyMiles,
+    daysWorkedPerMonth,
+    averageDailyIdling,
+    yearlyInsurancePremium,
+    averageVehicleMPG,
+    insuranceDeductible,
+    accidentsPerYear,
+    fuelCost,
+    handleFormSubmit
+  } = useContext(CalculatorContext);
   return (
     <Container>
       <Heading3>Your Estimated Monthly Savings</Heading3>
@@ -75,15 +88,15 @@ const Caluclate: React.FC = () => {
       </TableHeading>
       <Formik
         initialValues={{
-          fuelCost: 2.85,
-          hoursWorkedPerDay: 8,
-          averageDailyMiles: 80,
-          daysWorkedPerMonth: 20,
-          averageDailyIdling: 120,
-          yearlyInsurancePremium: 985,
-          averageVehicleMPG: 18,
-          insuranceDeductible: 500,
-          accidentsPerYear: 5
+          fuelCost,
+          hoursWorkedPerDay,
+          averageDailyMiles,
+          daysWorkedPerMonth,
+          averageDailyIdling,
+          yearlyInsurancePremium,
+          averageVehicleMPG,
+          insuranceDeductible,
+          accidentsPerYear
         }}
         validationSchema={Yup.object().shape({
           fuelCost: Yup.number()
@@ -115,7 +128,7 @@ const Caluclate: React.FC = () => {
             .required("Accidents per year is required")
         })}
         onSubmit={(values, actions) => {
-          console.log(values);
+          handleFormSubmit(values);
           actions.setSubmitting(false);
         }}
       >
