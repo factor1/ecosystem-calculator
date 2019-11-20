@@ -8,6 +8,7 @@
   "license": "MIT",
   "private": true,
   "devDependencies": {
+    "@types/react-helmet": "^5.0.14",
     "@types/react-router-dom": "^5.1.2",
     "@types/react-tooltip": "^3.11.0",
     "@types/yup": "^0.26.24",

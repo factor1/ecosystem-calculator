@@ -8,6 +8,7 @@ import { colors } from "../styles/theme";
 import TableInput from "./TableInput";
 import { CalculatorContext } from "../GlobalContext";
 import CostBreakdown from "./CostBreakdown";
+import SavingsForm from "./SavingsForm";
 
 const Container = styled.div`
   display: flex;
@@ -16,7 +17,7 @@ const Container = styled.div`
   align-items: center;
   position: relative;
   width: 100%;
-  max-width: 850px;
+  max-width: 916px;
   margin: 0 auto;
   padding: 100px 0;
 `;
@@ -242,6 +243,7 @@ const Caluclate: React.FC = () => {
         )}
       </Formik>
       <CostBreakdown />
+      <SavingsForm />
     </Container>
   );
 };
