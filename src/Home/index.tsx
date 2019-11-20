@@ -24,12 +24,14 @@ const Container = styled.div`
 const CardContainer = styled.div`
   display: flex;
   width: 100%;
-  max-width: 567px;
   position: relative;
   flex-flow: row wrap;
   justify-content: space-between;
   align-items: stretch;
   margin: 50px auto 0;
+  & > div + div {
+    margin-left: 34px;
+  }
 `;
 
 const CardTitle = styled.span`

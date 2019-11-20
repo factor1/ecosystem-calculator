@@ -1,8 +1,11 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
+import { Formik, Form, Field } from "formik";
+import * as Yup from "yup";
 
 import { Heading3, Heading5, Heading4 } from "../common/Typography";
 import { colors } from "../styles/theme";
+import TableInput from "./TableInput";
 
 const Container = styled.div`
   display: flex;
@@ -45,6 +48,17 @@ const TableHeading = styled.div`
   }
 `;
 
+const FormWrapper = styled.div`
+  display: flex;
+  position: relative;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: center;
+  & > div {
+    margin-bottom: 30px;
+  }
+`;
+
 const Caluclate: React.FC = () => {
   return (
     <Container>
@@ -59,6 +73,168 @@ const Caluclate: React.FC = () => {
           Enter your fleet data below to refine your estimated monthly savings.
         </Heading4>
       </TableHeading>
+      <Formik
+        initialValues={{
+          fuelCost: 2.85,
+          hoursWorkedPerDay: 8,
+          averageDailyMiles: 80,
+          daysWorkedPerMonth: 20,
+          averageDailyIdling: 120,
+          yearlyInsurancePremium: 985,
+          averageVehicleMPG: 18,
+          insuranceDeductible: 500,
+          accidentsPerYear: 5
+        }}
+        validationSchema={Yup.object().shape({
+          fuelCost: Yup.number()
+            .positive()
+            .required("Fuel cost is required"),
+          hoursWorkedPerDay: Yup.number()
+            .positive()
+            .required("Hours Worked Per Day is required"),
+          averageDailyMiles: Yup.number()
+            .positive()
+            .required("Average daily miles is required"),
+          daysWorkedPerMonth: Yup.number()
+            .positive()
+            .required("Days worked per month is required"),
+          averageDailyIdling: Yup.number()
+            .positive()
+            .required("Average daily idling is required"),
+          yearlyInsurancePremium: Yup.number()
+            .positive()
+            .required("Yearly insurance premium is required"),
+          averageVehicleMPG: Yup.number()
+            .positive()
+            .required("Average vehicle MPG is required"),
+          insuranceDeductible: Yup.number()
+            .positive()
+            .required("Insurance deductible is required"),
+          accidentsPerYear: Yup.number()
+            .positive()
+            .required("Accidents per year is required")
+        })}
+        onSubmit={(values, actions) => {
+          console.log(values);
+          actions.setSubmitting(false);
+        }}
+      >
+        {({ errors, touched, isSubmitting, handleSubmit }) => (
+          <Form style={{ width: "100%" }}>
+            <FormWrapper>
+              <Field
+                id="fuelCost"
+                name="fuelCost"
+                inputType="number"
+                step="0.01"
+                tooltip="Taken from the national average for diesel fuel"
+                label="Fuel Cost per Gallon ($)"
+                component={TableInput}
+                errors={errors}
+                touched={touched}
+                handleSubmit={handleSubmit}
+              />
+              <Field
+                id="hoursWorkedPerDay"
+                name="hoursWorkedPerDay"
+                inputType="number"
+                tooltip="Taken from the national average for diesel fuel"
+                label="Hours Worked per Day"
+                component={TableInput}
+                errors={errors}
+                touched={touched}
+                handleSubmit={handleSubmit}
+              />
+              <Field
+                id="averageDailyMiles"
+                name="averageDailyMiles"
+                inputType="number"
+                tooltip="Taken from the national average for diesel fuel"
+                label="Average Daily Mileage"
+                component={TableInput}
+                errors={errors}
+                touched={touched}
+                handleSubmit={handleSubmit}
+              />
+              <Field
+                id="daysWorkedPerMonth"
+                name="daysWorkedPerMonth"
+                inputType="number"
+                tooltip="Taken from the national average for diesel fuel"
+                label="Days Worked per Month"
+                component={TableInput}
+                errors={errors}
+                touched={touched}
+                handleSubmit={handleSubmit}
+              />
+              <Field
+                id="averageDailyIdling"
+                name="averageDailyIdling"
+                inputType="number"
+                tooltip="Taken from the national average for diesel fuel"
+                label="Average Daily Idling"
+                component={TableInput}
+                errors={errors}
+                touched={touched}
+                handleSubmit={handleSubmit}
+              />
+              <Field
+                id="yearlyInsurancePremium"
+                name="yearlyInsurancePremium"
+                inputType="number"
+                tooltip="Taken from the national average for diesel fuel"
+                label="Yearly Insurance Premium ($)"
+                component={TableInput}
+                errors={errors}
+                touched={touched}
+                handleSubmit={handleSubmit}
+              />
+              <Field
+                id="averageVehicleMPG"
+                name="averageVehicleMPG"
+                inputType="number"
+                tooltip="Taken from the national average for diesel fuel"
+                label="Average Vehicle MPG"
+                component={TableInput}
+                errors={errors}
+                touched={touched}
+                handleSubmit={handleSubmit}
+              />
+              <Field
+                id="insuranceDeductible"
+                name="insuranceDeductible"
+                inputType="number"
+                tooltip="Taken from the national average for diesel fuel"
+                label="Insurance Deductible ($)"
+                component={TableInput}
+                errors={errors}
+                touched={touched}
+                handleSubmit={handleSubmit}
+              />
+              <Field
+                id="accidentsPerYear"
+                name="accidentsPerYear"
+                inputType="number"
+                tooltip="Taken from the national average for diesel fuel"
+                label="Accidents per Year"
+                component={TableInput}
+                errors={errors}
+                touched={touched}
+                handleSubmit={handleSubmit}
+              />
+            </FormWrapper>
+          </Form>
+        )}
+      </Formik>
+      {/* <TableInput
+        label="Fuel Cost per Gallon"
+        id="fuelCost"
+        name="fuelCost"
+        tooltip="Taken from the national average for diesel fuel"
+        field={{}}
+        inputType="number"
+        step="0.01"
+      /> */}
     </Container>
   );
 };

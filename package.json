@@ -9,6 +9,7 @@
   "private": true,
   "devDependencies": {
     "@types/react-router-dom": "^5.1.2",
+    "@types/react-tooltip": "^3.11.0",
     "@types/yup": "^0.26.24",
     "@typescript-eslint/eslint-plugin": "^2.6.1",
     "@typescript-eslint/parser": "^2.6.1",
@@ -26,6 +27,7 @@
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-router-dom": "^5.1.2",
+    "react-tooltip": "^3.11.1",
     "styled-components": "^4.4.1",
     "yup": "^0.27.0"
   },
