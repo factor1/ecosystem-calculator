@@ -87,6 +87,7 @@ const Caluclate: React.FC = () => {
         </Heading4>
       </TableHeading>
       <Formik
+        enableReinitialize
         initialValues={{
           fuelCost,
           hoursWorkedPerDay,
@@ -239,15 +240,6 @@ const Caluclate: React.FC = () => {
           </Form>
         )}
       </Formik>
-      {/* <TableInput
-        label="Fuel Cost per Gallon"
-        id="fuelCost"
-        name="fuelCost"
-        tooltip="Taken from the national average for diesel fuel"
-        field={{}}
-        inputType="number"
-        step="0.01"
-      /> */}
     </Container>
   );
 };

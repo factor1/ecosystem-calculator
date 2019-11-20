@@ -1,4 +1,5 @@
-import React, { useState, Component } from "react";
+import React, { Component } from "react";
+import axios from "axios";
 
 interface GlobalContextProps {
   children: React.ReactChild;
@@ -70,7 +71,7 @@ export class ContextProvider extends Component<
     this.state = {
       fleetSize: null,
       averageWage: null,
-      fuelCost: 0,
+      fuelCost: null,
       hoursWorkedPerDay: 8,
       averageDailyMiles: 80,
       daysWorkedPerMonth: 20,
@@ -81,6 +82,26 @@ export class ContextProvider extends Component<
       accidentsPerYear: 5
     };
   }
+
+  componentDidMount() {
+    this.fetchFuelCost();
+  }
+
+  fetchFuelCost = async () => {
+    try {
+      const response = await axios.get(
+        "https://www.fueleconomy.gov/ws/rest/fuelprices"
+      );
+      if (response && response.data && response.data.diesel) {
+        const fuelCost = Number(response.data.diesel);
+        return this.setState({ fuelCost });
+      } else {
+        throw new Error("Could not get diesel pricing");
+      }
+    } catch (error) {
+      console.error("There was an error fetching fuel cost. ", error);
+    }
+  };
 
   handleFormSubmit = (values: FormValues) => {
     return this.setState({ ...values });
