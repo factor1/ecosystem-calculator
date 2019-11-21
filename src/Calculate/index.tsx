@@ -37,6 +37,10 @@ const Savings = styled.div`
     color: ${colors.lightGrey};
     font-weight: 400;
   }
+  & sup {
+    font-size: 50%;
+    vertical-align: middle;
+  }
 `;
 
 const TableHeading = styled.div`
@@ -83,7 +87,7 @@ const Caluclate: React.FC = () => {
     const transformedSavings = split(toString(monthlySavings.toFixed(2)), ".");
 
     if (value === "dollar") {
-      return transformedSavings[0];
+      return Number(transformedSavings[0]).toLocaleString("en-US");
     } else if (value === "cents") {
       return transformedSavings[1];
     }

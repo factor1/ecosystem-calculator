@@ -101,7 +101,10 @@ const CostBreakdown: React.FC = () => {
   } = useContext(CalculatorContext);
 
   const formatNumber = (number: number) => {
-    return Number(number).toFixed(2);
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD"
+    }).format(number);
   };
 
   return (
@@ -134,7 +137,7 @@ const CostBreakdown: React.FC = () => {
           <Paragraph color={colors.midGrey}>Cost of GPS Insight</Paragraph>
         </RowLabel>
         <BeforeValue>{""}</BeforeValue>
-        <AfterValue>${formatNumber(gpsInsightCost)}</AfterValue>
+        <AfterValue>{formatNumber(gpsInsightCost)}</AfterValue>
         <Divider />
 
         {/* Idling */}
@@ -142,8 +145,8 @@ const CostBreakdown: React.FC = () => {
         <RowLabel>
           <Paragraph color={colors.midGrey}>Idling</Paragraph>
         </RowLabel>
-        <BeforeValue>${formatNumber(idleCostBefore)}</BeforeValue>
-        <AfterValue>${formatNumber(idleCostAfter)}</AfterValue>
+        <BeforeValue>{formatNumber(idleCostBefore)}</BeforeValue>
+        <AfterValue>{formatNumber(idleCostAfter)}</AfterValue>
         <Divider />
 
         {/* Fuel Costs */}
@@ -151,8 +154,8 @@ const CostBreakdown: React.FC = () => {
         <RowLabel>
           <Paragraph color={colors.midGrey}>Fuel Costs</Paragraph>
         </RowLabel>
-        <BeforeValue>${formatNumber(fuelCostBefore)}</BeforeValue>
-        <AfterValue>${formatNumber(fuelCostAfter)}</AfterValue>
+        <BeforeValue>{formatNumber(fuelCostBefore)}</BeforeValue>
+        <AfterValue>{formatNumber(fuelCostAfter)}</AfterValue>
         <Divider />
 
         {/* Maintenance, Wear and Tear */}
@@ -162,8 +165,8 @@ const CostBreakdown: React.FC = () => {
             Maintenance, Wear and Tear
           </Paragraph>
         </RowLabel>
-        <BeforeValue>${formatNumber(maintenanceBefore)}</BeforeValue>
-        <AfterValue>${formatNumber(maintenanceAfter)}</AfterValue>
+        <BeforeValue>{formatNumber(maintenanceBefore)}</BeforeValue>
+        <AfterValue>{formatNumber(maintenanceAfter)}</AfterValue>
         <Divider />
 
         {/* Productivity Lost */}
@@ -171,8 +174,8 @@ const CostBreakdown: React.FC = () => {
         <RowLabel>
           <Paragraph color={colors.midGrey}>Productivity Lost</Paragraph>
         </RowLabel>
-        <BeforeValue>${formatNumber(productivityLostBefore)}</BeforeValue>
-        <AfterValue>${formatNumber(productivityLostAfter)}</AfterValue>
+        <BeforeValue>{formatNumber(productivityLostBefore)}</BeforeValue>
+        <AfterValue>{formatNumber(productivityLostAfter)}</AfterValue>
         <Divider />
 
         {/* Out of Pocket Accident Cost */}
@@ -182,8 +185,8 @@ const CostBreakdown: React.FC = () => {
             Out of Pocket Accident Cost
           </Paragraph>
         </RowLabel>
-        <BeforeValue>${formatNumber(accidentCostBefore)}</BeforeValue>
-        <AfterValue>${formatNumber(accidentCostAfter)}</AfterValue>
+        <BeforeValue>{formatNumber(accidentCostBefore)}</BeforeValue>
+        <AfterValue>{formatNumber(accidentCostAfter)}</AfterValue>
         <Divider />
 
         {/* Total*/}
@@ -191,8 +194,8 @@ const CostBreakdown: React.FC = () => {
         <RowLabel>
           <Paragraph color={colors.midGrey}>Total</Paragraph>
         </RowLabel>
-        <BeforeValue>${formatNumber(totalCostBefore)}</BeforeValue>
-        <AfterValue>${formatNumber(totalCostAfter)}</AfterValue>
+        <BeforeValue>{formatNumber(totalCostBefore)}</BeforeValue>
+        <AfterValue>{formatNumber(totalCostAfter)}</AfterValue>
         <Divider />
 
         {/* Monthly Savings */}
@@ -201,7 +204,7 @@ const CostBreakdown: React.FC = () => {
           <Paragraph color={colors.green}>Monthly Savings</Paragraph>
         </RowLabel>
         <BeforeValue>{""}</BeforeValue>
-        <MonthlySavings>${formatNumber(monthlySavings)}</MonthlySavings>
+        <MonthlySavings>{formatNumber(monthlySavings)}</MonthlySavings>
         <Divider />
       </Grid>
     </Container>
