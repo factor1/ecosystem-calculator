@@ -1,11 +1,29 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import styled from "styled-components";
+import { Formik, Form, Field } from "formik";
+import * as Yup from "yup";
 
 import { Heading3, Heading5 } from "../common/Typography";
+import FormInput from "./FormInput";
+import Button from "~common/Button";
+import { CalculatorContext } from "~GlobalContext";
 
 const Container = styled.div`
   width: 100%;
   margin-top: 132px;
+`;
+
+const FormContainer = styled.div`
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 48px;
+  & > div {
+    margin-bottom: 19px;
+  }
 `;
 
 const SavingsForm: React.FC = () => {
@@ -13,50 +31,180 @@ const SavingsForm: React.FC = () => {
     // @ts-ignore
     if (MktoForms2) {
       // @ts-ignore
-      MktoForms2.loadForm("//app-ab07.marketo.com", "920-LJZ-738", 2200);
+      MktoForms2.loadForm("//app-ab10.marketo.com", "733-VUN-667", 1628);
       // @ts-ignore
-      MktoForms2.whenReady(function(mktoForm) {
-        const customFormData = {
-          formSelector: "#test-form",
-          fieldMap: [
-            {
-              marketo: "Email",
-              custom: "email"
-            },
-            {
-              marketo: "AnotherField__c",
-              custom: "AnOtHeRfIeLd"
-            }
-          ]
-        };
-
-        const formEl = document.querySelector(customFormData.formSelector);
-
-        if (formEl) {
-          formEl.addEventListener("submit", function(e) {
-            let customForm: any = e.target,
-              mktoFields: any = {};
-
-            // iterate over fields on custom form to create MktoForms-compat object
-            customFormData.fieldMap.forEach(function(field) {
-              mktoFields[field.marketo] = customForm.querySelector(
-                "input[name='" + field.custom + "']"
-              ).value;
-            });
-
-            // add to Marketo form
-            mktoForm.addHiddenFields(mktoFields);
-
-            // submit Marketo form
-            mktoForm.submit();
-
-            // stop custom HTML form submission
-            e.preventDefault();
-          });
-        }
-      });
+      // MktoForms2.whenReady(function(mktoForm) {
+      // const customFormData = {
+      //   formSelector: "#formikForm",
+      //   fieldMap: [
+      //     {
+      //       marketo: "Email",
+      //       custom: "Email"
+      //     },
+      //     {
+      //       marketo: "FirstName",
+      //       custom: "FirstName"
+      //     },
+      //     {
+      //       marketo: "LastName",
+      //       custom: "LastName"
+      //     },
+      //     {
+      //       marketo: "companyNameOnContact",
+      //       custom: "companyNameOnContact"
+      //     },
+      //     {
+      //       marketo: "rOICalcAccidentsperYearROI",
+      //       custom: "rOICalcAccidentsperYearROI"
+      //     },
+      //     {
+      //       marketo: "rOICalcAnnualInsurance",
+      //       custom: "rOICalcAnnualInsurance"
+      //     },
+      //     {
+      //       marketo: "rOICalcAvgDailyIdlingMinperVehicle",
+      //       custom: "rOICalcAvgDailyIdlingMinperVehicle"
+      //     },
+      //     {
+      //       marketo: "rOICalcAvgDailyMileageperVehicle",
+      //       custom: "rOICalcAvgDailyMileageperVehicle"
+      //     },
+      //     {
+      //       marketo: "rOICalcAvgHourlyWage",
+      //       custom: "rOICalcAvgHourlyWage"
+      //     },
+      //     {
+      //       marketo: "rOICalcAvgVehicleMPG",
+      //       custom: "rOICalcAvgVehicleMPG"
+      //     },
+      //     {
+      //       marketo: "rOICalcDaysWorkedperMonth",
+      //       custom: "rOICalcDaysWorkedperMonth"
+      //     },
+      //     {
+      //       marketo: "rOICalcFleetSize",
+      //       custom: "rOICalcFleetSize"
+      //     },
+      //     {
+      //       marketo: "rOICalcFuelCost",
+      //       custom: "rOICalcFuelCost"
+      //     },
+      //     {
+      //       marketo: "rOICalcHoursWorkedperDay",
+      //       custom: "rOICalcHoursWorkedperDay"
+      //     },
+      //     {
+      //       marketo: "rOICalcInsuranceDeductible",
+      //       custom: "rOICalcInsuranceDeductible"
+      //     },
+      //     {
+      //       marketo: "rOICalcOutputAccidentCostAfter",
+      //       custom: "rOICalcOutputAccidentCostAfter"
+      //     },
+      //     {
+      //       marketo: "rOICalcOutputAccidentCostBefore",
+      //       custom: "rOICalcOutputAccidentCostBefore"
+      //     },
+      //     {
+      //       marketo: "rOICalcOutputFuelCostsBefore",
+      //       custom: "rOICalcOutputFuelCostsBefore"
+      //     },
+      //     {
+      //       marketo: "rOICalcOutputFulesCostsAfter",
+      //       custom: "rOICalcOutputFulesCostsAfter"
+      //     },
+      //     {
+      //       marketo: "rOICalcOutputGPSInsightCostAfter",
+      //       custom: "rOICalcOutputGPSInsightCostAfter"
+      //     },
+      //     {
+      //       marketo: "rOICalcOutputIdlingAfter",
+      //       custom: "rOICalcOutputIdlingAfter"
+      //     },
+      //     {
+      //       marketo: "rOICalcOutputIdlingBefore",
+      //       custom: "rOICalcOutputIdlingBefore"
+      //     },
+      //     {
+      //       marketo: "rOICalcOutputMaintenanceAfter",
+      //       custom: "rOICalcOutputMaintenanceAfter"
+      //     },
+      //     {
+      //       marketo: "rOICalcOutputMaintenanceBefore",
+      //       custom: "rOICalcOutputMaintenanceBefore"
+      //     },
+      //     {
+      //       marketo: "rOICalcOutputProductivityLostAfter",
+      //       custom: "rOICalcOutputProductivityLostAfter"
+      //     },
+      //     {
+      //       marketo: "rOICalcOutputProductivityLostBefore",
+      //       custom: "rOICalcOutputProductivityLostBefore"
+      //     },
+      //     {
+      //       marketo: "rOICalcOutputTotalAfter",
+      //       custom: "rOICalcOutputTotalAfter"
+      //     },
+      //     {
+      //       marketo: "rOICalcOutputTotalBefore",
+      //       custom: "rOICalcOutputTotalBefore"
+      //     },
+      //     {
+      //       marketo: "rOICalcOutputTotalDelta",
+      //       custom: "rOICalcOutputTotalDelta"
+      //     }
+      //   ]
+      // };
+      // const formEl = document.querySelector(customFormData.formSelector);
+      // if (formEl) {
+      //   formEl.addEventListener("submit", function(e) {
+      //     let customForm: any = e.target,
+      //       mktoFields: any = {};
+      //     // iterate over fields on custom form to create MktoForms-compat object
+      //     customFormData.fieldMap.forEach(function(field) {
+      //       mktoFields[field.marketo] = customForm.querySelector(
+      //         "input[name='" + field.custom + "']"
+      //       ).value;
+      //     });
+      //     // add to Marketo form
+      //     mktoForm.addHiddenFields(mktoFields);
+      //     // submit Marketo form
+      //     mktoForm.submit();
+      //     // stop custom HTML form submission
+      //     // e.preventDefault();
+      //   });
+      // }
+      // });
     }
   }, []);
+
+  const {
+    idleCostBefore,
+    idleCostAfter,
+    gpsInsightCost,
+    fuelCostBefore,
+    fuelCostAfter,
+    maintenanceBefore,
+    maintenanceAfter,
+    productivityLostBefore,
+    productivityLostAfter,
+    accidentCostBefore,
+    accidentCostAfter,
+    totalCostBefore,
+    totalCostAfter,
+    monthlySavings,
+    fleetSize,
+    averageWage,
+    fuelCost,
+    hoursWorkedPerDay,
+    averageDailyMiles,
+    daysWorkedPerMonth,
+    averageDailyIdling,
+    yearlyInsurancePremium,
+    averageVehicleMPG,
+    insuranceDeductible,
+    accidentsPerYear
+  } = useContext(CalculatorContext);
 
   return (
     <Container>
@@ -65,13 +213,115 @@ const SavingsForm: React.FC = () => {
         Tell us a little bit about yourself and we'll email you a copy of your
         savings analysis.
       </Heading5>
-      <form id="mktoForm_2200" style={{ display: "none" }}></form>
+      <form id="mktoForm_1628" style={{ display: "none" }}></form>
 
-      <form id="test-form">
-        <input name="email" type="text" />
-        <input name="AnOtHeRfIeLd" type="text" />
-        <input name="submit" type="submit" />
-      </form>
+      <Formik
+        enableReinitialize
+        initialValues={{
+          Email: "",
+          FirstName: "",
+          LastName: "",
+          companyNameOnContact: "",
+          rOICalcAccidentsperYearROI: accidentsPerYear,
+          rOICalcAnnualInsurance: yearlyInsurancePremium,
+          rOICalcAvgDailyIdlingMinperVehicle: averageDailyIdling,
+          rOICalcAvgDailyMileageperVehicle: averageDailyMiles,
+          rOICalcAvgHourlyWage: averageWage,
+          rOICalcAvgVehicleMPG: averageVehicleMPG,
+          rOICalcDaysWorkedperMonth: daysWorkedPerMonth,
+          rOICalcFleetSize: fleetSize,
+          rOICalcFuelCost: fuelCost,
+          rOICalcHoursWorkedperDay: hoursWorkedPerDay,
+          rOICalcInsuranceDeductible: insuranceDeductible,
+          rOICalcOutputAccidentCostAfter: accidentCostAfter,
+          rOICalcOutputAccidentCostBefore: accidentCostBefore,
+          rOICalcOutputFuelCostsBefore: fuelCostBefore,
+          rOICalcOutputFulesCostsAfter: fuelCostAfter,
+          rOICalcOutputGPSInsightCostAfter: gpsInsightCost,
+          rOICalcOutputIdlingAfter: idleCostAfter,
+          rOICalcOutputIdlingBefore: idleCostBefore,
+          rOICalcOutputMaintenanceAfter: maintenanceAfter,
+          rOICalcOutputMaintenanceBefore: maintenanceBefore,
+          rOICalcOutputProductivityLostAfter: productivityLostAfter,
+          rOICalcOutputProductivityLostBefore: productivityLostBefore,
+          rOICalcOutputTotalAfter: totalCostAfter,
+          rOICalcOutputTotalBefore: totalCostBefore,
+          rOICalcOutputTotalDelta: monthlySavings
+        }}
+        validationSchema={Yup.object().shape({
+          Email: Yup.string()
+            .email()
+            .required("Email is required"),
+          FirstName: Yup.string().required("First name is required"),
+          LastName: Yup.string().required("Last name is required"),
+          companyNameOnContact: Yup.string().required(
+            "Company name is required"
+          )
+        })}
+        onSubmit={(values, actions) => {
+          console.log(values);
+          try {
+            // @ts-ignore
+            MktoForms2.whenReady(function(mktoForm: any) {
+              mktoForm.addHiddenFields(values);
+              mktoForm.submit();
+              mktoForm.onSuccess(() => {
+                actions.setSubmitting(false);
+                console.log("success");
+              });
+            });
+          } catch (error) {
+            console.error("There was an error submitting to marketo: ", error);
+          }
+        }}
+      >
+        {({ errors, touched, isSubmitting }) => (
+          <Form id="formikForm" style={{ width: "100%" }}>
+            <FormContainer>
+              <Field
+                id="FirstName"
+                name="FirstName"
+                touched={touched}
+                errors={errors}
+                label="First Name"
+                component={FormInput}
+              />
+              <Field
+                id="LastName"
+                name="LastName"
+                touched={touched}
+                errors={errors}
+                label="Last Name"
+                component={FormInput}
+              />
+              <Field
+                id="companyNameOnContact"
+                name="companyNameOnContact"
+                touched={touched}
+                errors={errors}
+                label="Company"
+                component={FormInput}
+              />
+              <Field
+                id="Email"
+                name="Email"
+                touched={touched}
+                errors={errors}
+                label="Email"
+                type="email"
+                component={FormInput}
+              />
+              <Button
+                disabled={isSubmitting}
+                style={{ marginTop: 30 }}
+                type="submit"
+              >
+                Submit
+              </Button>
+            </FormContainer>
+          </Form>
+        )}
+      </Formik>
     </Container>
   );
 };
