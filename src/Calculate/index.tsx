@@ -159,7 +159,6 @@ const Caluclate: React.FC = () => {
                 name="fuelCost"
                 inputType="number"
                 step="0.01"
-                tooltip="Taken from the national average for diesel fuel"
                 label="Fuel Cost per Gallon ($)"
                 component={TableInput}
                 errors={errors}
@@ -170,7 +169,6 @@ const Caluclate: React.FC = () => {
                 id="hoursWorkedPerDay"
                 name="hoursWorkedPerDay"
                 inputType="number"
-                tooltip="Taken from the national average for diesel fuel"
                 label="Hours Worked per Day"
                 component={TableInput}
                 errors={errors}
@@ -181,7 +179,6 @@ const Caluclate: React.FC = () => {
                 id="averageDailyMiles"
                 name="averageDailyMiles"
                 inputType="number"
-                tooltip="Taken from the national average for diesel fuel"
                 label="Average Daily Mileage"
                 component={TableInput}
                 errors={errors}
@@ -192,7 +189,6 @@ const Caluclate: React.FC = () => {
                 id="daysWorkedPerMonth"
                 name="daysWorkedPerMonth"
                 inputType="number"
-                tooltip="Taken from the national average for diesel fuel"
                 label="Days Worked per Month"
                 component={TableInput}
                 errors={errors}
@@ -203,7 +199,7 @@ const Caluclate: React.FC = () => {
                 id="averageDailyIdling"
                 name="averageDailyIdling"
                 inputType="number"
-                tooltip="Taken from the national average for diesel fuel"
+                tooltip="The U.S. Department of Energy estimates average commerical idling of 2 hrs/vehicle/day"
                 label="Average Daily Idling"
                 component={TableInput}
                 errors={errors}
@@ -214,7 +210,6 @@ const Caluclate: React.FC = () => {
                 id="yearlyInsurancePremium"
                 name="yearlyInsurancePremium"
                 inputType="number"
-                tooltip="Taken from the national average for diesel fuel"
                 label="Yearly Insurance Premium ($)"
                 component={TableInput}
                 errors={errors}
@@ -225,7 +220,6 @@ const Caluclate: React.FC = () => {
                 id="averageVehicleMPG"
                 name="averageVehicleMPG"
                 inputType="number"
-                tooltip="Taken from the national average for diesel fuel"
                 label="Average Vehicle MPG"
                 component={TableInput}
                 errors={errors}
@@ -236,7 +230,6 @@ const Caluclate: React.FC = () => {
                 id="insuranceDeductible"
                 name="insuranceDeductible"
                 inputType="number"
-                tooltip="Taken from the national average for diesel fuel"
                 label="Insurance Deductible ($)"
                 component={TableInput}
                 errors={errors}
@@ -247,7 +240,7 @@ const Caluclate: React.FC = () => {
                 id="accidentsPerYear"
                 name="accidentsPerYear"
                 inputType="number"
-                tooltip="Taken from the national average for diesel fuel"
+                tooltip="Commercial vehicles have an annual accident rate of 20%, according to the National Safety Council"
                 label="Accidents per Year"
                 component={TableInput}
                 errors={errors}

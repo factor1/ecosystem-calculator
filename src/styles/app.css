@@ -9,3 +9,16 @@ html {
   background-color: #ffffff;
   font-family: "Lato", Helvetica, sans-serif;
 }
+
+.actionToolTip {
+  pointer-events: auto !important;
+}
+
+.actionTooltip:hover {
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.actionToolTip a {
+  color: #fff !important;
+}

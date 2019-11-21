@@ -8,7 +8,7 @@ import ToolTipIcon from "../common/ToolTipIcon";
 interface Props {
   label: string;
   field: any;
-  tooltip: string;
+  tooltip?: string;
   id: string;
   name: string;
   inputType: string;
@@ -22,7 +22,7 @@ const Container = styled.div`
   display: flex;
   position: relative;
   width: 100%;
-  max-width: 411px;
+  max-width: 420px;
   height: 48px;
   justify-content: space-between;
   align-items: center;
@@ -96,7 +96,11 @@ const TableInput: React.FC<Props> = ({
   return (
     <>
       <Container>
-        <ToolTipIcon dataTip={tooltip} />
+        {tooltip ? (
+          <ToolTipIcon dataTip={tooltip} style={{ marginRight: 18 }} />
+        ) : (
+          <div style={{ height: "100%", width: 20, marginRight: 18 }} />
+        )}
         <InputContainer>
           <Label htmlFor={id}>{label}</Label>
           <Input

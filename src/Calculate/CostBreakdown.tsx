@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
+import ReactTooltip from "react-tooltip";
 
 import { colors } from "../styles/theme";
 import { Heading3, Paragraph } from "../common/Typography";
@@ -111,7 +112,24 @@ const CostBreakdown: React.FC = () => {
         <AfterHeading>Cost After GPS Insight</AfterHeading>
 
         {/* Cost of GPS Insight */}
-        <ToolTipIcon dataTip="Some info goes here" />
+        <div data-tip data-for="costOf">
+          <ToolTipIcon />
+        </div>
+        <ReactTooltip
+          id="costOf"
+          effect="solid"
+          delayHide={1000}
+          className="actionToolTip"
+        >
+          GPS Insight Standard -{" "}
+          <a
+            href="https://www.gpsinsight.com/solutions"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            See all options
+          </a>
+        </ReactTooltip>
         <RowLabel>
           <Paragraph color={colors.midGrey}>Cost of GPS Insight</Paragraph>
         </RowLabel>
