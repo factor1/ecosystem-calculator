@@ -2,6 +2,8 @@ import React, { useContext } from "react";
 import styled from "styled-components";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
+import toString from "lodash/toString";
+import split from "lodash/split";
 
 import { Heading3, Heading5, Heading4 } from "../common/Typography";
 import { colors } from "../styles/theme";
@@ -73,13 +75,27 @@ const Caluclate: React.FC = () => {
     insuranceDeductible,
     accidentsPerYear,
     fuelCost,
-    handleFormSubmit
+    handleFormSubmit,
+    monthlySavings
   } = useContext(CalculatorContext);
+
+  const renderMonthlySavings = (value: "dollar" | "cents") => {
+    const transformedSavings = split(toString(monthlySavings.toFixed(2)), ".");
+
+    if (value === "dollar") {
+      return transformedSavings[0];
+    } else if (value === "cents") {
+      return transformedSavings[1];
+    }
+  };
+
   return (
     <Container>
       <Heading3>Your Estimated Monthly Savings</Heading3>
       <Savings>
-        <sup>$</sup> 2,478.<sup>96</sup>
+        <sup>$</sup>
+        {renderMonthlySavings("dollar")}.
+        <sup>{renderMonthlySavings("cents")}</sup>
         <sup className="grey">/mo</sup>
       </Savings>
       <TableHeading>
