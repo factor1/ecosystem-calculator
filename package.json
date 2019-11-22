@@ -1,6 +1,6 @@
 {
   "name": "gpsinsight-savings-calculator",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "description": "A saving calculator for GPS Insight",
   "main": "build/index.js",
   "repository": "https://github.com/factor1/gpsinsight-savings-calculator",
@@ -43,6 +43,6 @@
   "scripts": {
     "start": "parcel src/index.html --open",
     "test": "tsc && eslint src/**/*.tsx && eslint src/**/*.ts",
-    "build": "rm -Rf dist && yarn test && parcel build src/index.html"
+    "build": "rm -Rf dist && yarn test && parcel build src/index.html --public-url /2019/gpsi"
   }
 }
