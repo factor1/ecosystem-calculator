@@ -1,0 +1,36 @@
+* {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body,
+html {
+  background-color: #ffffff;
+  font-family: "Lato", Helvetica, sans-serif;
+}
+
+.actionToolTip {
+  pointer-events: auto !important;
+}
+
+.actionTooltip:hover {
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.actionToolTip a {
+  color: #fff !important;
+}
+
+@media screen and (max-width: 768px) {
+  .hideMobile {
+    display: none !important;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  .mobileOnly {
+    display: none !important;
+  }
+}

@@ -1,7 +1,7 @@
 node_modules
 .DS_Store
-build
-dist
+#build
+#dist
 error_log
 *.log
 .cache
