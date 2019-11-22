@@ -7,7 +7,7 @@ interface GlobalContextProps {
 }
 
 interface ContextState {
-  fleetSize: number | null;
+  fleetSize: number | string | null;
   averageWage: number | null;
   fuelCost: number | string | null;
   hoursWorkedPerDay: number | null;
@@ -35,7 +35,7 @@ interface ContextState {
 }
 
 interface ContextValues {
-  fleetSize: number | null;
+  fleetSize: number | string | null;
   averageWage: number | null;
   fuelCost: number | string | null;
   hoursWorkedPerDay: number | null;
@@ -77,7 +77,7 @@ interface FormValues {
 }
 
 interface InitialFormValues {
-  fleetSize: number;
+  fleetSize: number | string;
   averageWage: number;
 }
 
@@ -196,7 +196,7 @@ export class ContextProvider extends Component<
     }
 
     const idleCostBefore =
-      (averageDailyIdling / 60) * daysWorkedPerMonth * fleetSize * 0.9;
+      (averageDailyIdling / 60) * daysWorkedPerMonth * Number(fleetSize) * 0.9;
 
     const idleCostAfter = idleCostBefore * 0.25;
 
@@ -208,7 +208,7 @@ export class ContextProvider extends Component<
     if (!fleetSize) {
       return null;
     }
-    const gpsInsightCost = -21.95 * fleetSize;
+    const gpsInsightCost = -21.95 * Number(fleetSize);
 
     return this.setState({ gpsInsightCost });
   };
@@ -230,7 +230,8 @@ export class ContextProvider extends Component<
     ) {
       return null;
     }
-    const monthlyMileage = fleetSize * averageDailyMiles * daysWorkedPerMonth;
+    const monthlyMileage =
+      Number(fleetSize) * averageDailyMiles * daysWorkedPerMonth;
     const gallons = monthlyMileage / averageVehicleMPG;
     const fuelCostBefore = gallons * Number(fuelCost);
 
@@ -245,7 +246,8 @@ export class ContextProvider extends Component<
     if (!fleetSize || !averageDailyMiles || !daysWorkedPerMonth) {
       return null;
     }
-    const monthlyMileage = fleetSize * averageDailyMiles * daysWorkedPerMonth;
+    const monthlyMileage =
+      Number(fleetSize) * averageDailyMiles * daysWorkedPerMonth;
     const maintenanceBefore = 0.1 * monthlyMileage;
 
     const maintenanceAfter = maintenanceBefore * 0.75;
@@ -271,7 +273,11 @@ export class ContextProvider extends Component<
     }
 
     const productivityLostBefore =
-      averageWage * daysWorkedPerMonth * hoursWorkedPerDay * 0.125 * fleetSize;
+      averageWage *
+      daysWorkedPerMonth *
+      hoursWorkedPerDay *
+      0.125 *
+      Number(fleetSize);
 
     const productivityLostAfter = productivityLostBefore / 2;
 

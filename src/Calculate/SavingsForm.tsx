@@ -5,8 +5,8 @@ import * as Yup from "yup";
 
 import { Heading3, Heading5, Heading2 } from "../common/Typography";
 import FormInput from "./FormInput";
-import Button from "~common/Button";
-import { CalculatorContext } from "~GlobalContext";
+import Button from "../common/Button";
+import { CalculatorContext } from "../GlobalContext";
 
 const Container = styled.div`
   width: 100%;
@@ -72,8 +72,8 @@ const SavingsForm: React.FC = () => {
         Send Me the Savings!
       </Heading3>
       <Heading5 className="hideMobile">
-        Tell us a little bit about yourself and we'll email you a copy of your
-        savings analysis.
+        {`Tell us a little bit about yourself and we'll email you a copy of your
+        savings analysis.`}
       </Heading5>
       <Heading2 className="mobileOnly">
         See how we calculated your results with a detailed cost analysis

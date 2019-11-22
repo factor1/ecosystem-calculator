@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 import { Paragraph } from "../common/Typography";
-import { colors } from "~styles/theme";
+import { colors } from "../styles/theme";
 
 const Icon = styled.div`
   display: flex;

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { FormikErrors, FormikTouched } from "formik";
+import { FormikErrors, FormikTouched } from "formik"; // eslint-disable-line
 
 import { colors } from "../styles/theme";
 

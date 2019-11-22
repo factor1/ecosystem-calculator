@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 
 import { colors } from "../styles/theme";
-import { FormikTouched, FormikErrors } from "formik";
+import { FormikTouched, FormikErrors } from "formik"; // eslint-disable-line no-unused-vars
 
 interface Props {
   placeholder: string;
