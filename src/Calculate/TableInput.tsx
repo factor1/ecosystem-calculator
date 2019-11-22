@@ -27,6 +27,17 @@ const Container = styled.div`
   justify-content: space-between;
   align-items: center;
   flex-flow: row nowrap;
+  @media screen and (max-width: 768px) {
+    max-width: 380px;
+    height: 41px;
+  }
+
+  .labelMobileOnly {
+    display: flex;
+    @media screen and (min-width: 769px) {
+      display: none;
+    }
+  }
 `;
 
 const InputContainer = styled.div`
@@ -46,12 +57,20 @@ const InputContainer = styled.div`
     -webkit-appearance: none;
     margin: 0;
   }
+
+  @media screen and (max-width: 768px) {
+    padding-left: 10px;
+  }
 `;
 
 const Label = styled.label`
   font: 400 16px/19px Lato;
   letter-spacing: 0.4px;
   color: ${colors.blue};
+  @media screen and (max-width: 768px) {
+    font: 400 14px/17px Lato;
+    letter-spacing: 0.35px;
+  }
 `;
 
 const Input = styled.input`
@@ -67,6 +86,12 @@ const Input = styled.input`
   height: 100%;
   width: 148px;
   padding-right: 19px;
+
+  @media screen and (max-width: 768px) {
+    font: 400 14px/17px Lato;
+    letter-spacing: 0.35px;
+    width: 105px;
+  }
 `;
 
 const ErrorMessage = styled.div`
@@ -97,12 +122,36 @@ const TableInput: React.FC<Props> = ({
     <>
       <Container>
         {tooltip ? (
-          <ToolTipIcon dataTip={tooltip} style={{ marginRight: 18 }} />
+          <ToolTipIcon
+            className="hideMobile"
+            dataTip={tooltip}
+            style={{ marginRight: 18 }}
+          />
         ) : (
-          <div style={{ height: "100%", width: 20, marginRight: 18 }} />
+          <div
+            className="hideMobile"
+            style={{ height: "100%", width: 20, marginRight: 18 }}
+          />
         )}
         <InputContainer>
-          <Label htmlFor={id}>{label}</Label>
+          <div className="labelMobileOnly">
+            {tooltip ? (
+              <ToolTipIcon
+                className="mobileOnly"
+                dataTip={tooltip}
+                style={{ marginRight: 12 }}
+              />
+            ) : (
+              <div
+                className="mobileOnly"
+                style={{ height: "100%", width: 20, marginRight: 12 }}
+              />
+            )}
+            <Label htmlFor={id}>{label}</Label>{" "}
+          </div>
+          <Label className="hideMobile" htmlFor={id}>
+            {label}
+          </Label>{" "}
           <Input
             type={inputType}
             id={id}
