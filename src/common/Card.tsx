@@ -14,7 +14,7 @@ const Wrapper = styled.div`
   padding: 24px;
   width: 100%;
   max-width: 241px;
-  @media screen and (min-width: 512px) {
+  @media screen and (min-width: 769px) {
     border-radius: 4px;
     max-width: ${props => props.width}px;
   }

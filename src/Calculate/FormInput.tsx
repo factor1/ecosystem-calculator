@@ -26,6 +26,11 @@ const Container = styled.div`
   box-shadow: 0px 2px 2px #00000029;
   border-radius: 4px;
   background: #fff;
+
+  @media screen and (max-width: 768px) {
+    max-width: 380px;
+    height: 41px;
+  }
 `;
 
 const Label = styled.label`
@@ -39,6 +44,12 @@ const Label = styled.label`
   justify-content: flex-start;
   color: ${colors.midGrey};
   padding-left: 30px;
+
+  @media screen and (max-width: 768px) {
+    font: 400 14px/17px Lato;
+    letter-spacing: 0.35px;
+    color: ${colors.blue};
+  }
 `;
 
 const Input = styled.input`
@@ -52,6 +63,11 @@ const Input = styled.input`
   color: ${colors.blue};
   text-align: right;
   padding-right: 30px;
+
+  @media screen and (max-width: 768px) {
+    font: 400 14px/17px Lato;
+    letter-spacing: 0.35px;
+  }
 `;
 
 const ErrorMessage = styled.div`

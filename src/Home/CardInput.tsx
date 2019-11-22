@@ -48,6 +48,19 @@ const StyledInput = styled.div`
     letter-spacing: 0;
     padding-bottom: 0;
   }
+
+  @media screen and (max-width: 768px) {
+    & input {
+      font: 400 48px/57px Lato;
+      letter-spacing: 0;
+      height: 72px;
+    }
+    .currencyIndicator {
+      position: absolute;
+      font-size: 24px;
+      top: -15px;
+    }
+  }
 `;
 
 const ErrorWrapper = styled.div`

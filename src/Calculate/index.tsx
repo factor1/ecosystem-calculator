@@ -22,6 +22,10 @@ const Container = styled.div`
   max-width: 916px;
   margin: 0 auto;
   padding: 100px 0;
+
+  @media screen and (max-width: 768px) {
+    padding: 100px 18px;
+  }
 `;
 
 const Savings = styled.div`
@@ -41,6 +45,11 @@ const Savings = styled.div`
     font-size: 50%;
     vertical-align: middle;
   }
+
+  @media screen and (max-width: 768px) {
+    font: 600 55px/66px Lato;
+    letter-spacing: 0;
+  }
 `;
 
 const TableHeading = styled.div`
@@ -51,6 +60,9 @@ const TableHeading = styled.div`
   .ttu {
     text-transform: uppercase;
     margin-bottom: 0;
+    @media screen and (max-width: 768px) {
+      text-align: center;
+    }
   }
   h4 {
     margin-top: 14px;
@@ -65,6 +77,10 @@ const FormWrapper = styled.div`
   align-items: center;
   & > div {
     margin-bottom: 30px;
+  }
+
+  @media screen and (max-width: 768px) {
+    flex-flow: column;
   }
 `;
 

@@ -2,8 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import ReactTooltip from "react-tooltip";
 
-import { colors } from "../styles/theme";
-
 const Icon = styled.div`
   display: flex;
   position: relative;
@@ -22,12 +20,18 @@ interface Props {
   dataTip?: string;
   style?: Object;
   fill?: string;
+  className?: string;
 }
 
-const ToolTipIcon: React.FC<Props> = ({ dataTip, style, fill = "#949494" }) => {
+const ToolTipIcon: React.FC<Props> = ({
+  dataTip,
+  style,
+  fill = "#949494",
+  className
+}) => {
   return (
     <>
-      <Icon data-tip={dataTip} style={style}>
+      <Icon className={className} data-tip={dataTip} style={style}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           x="0px"

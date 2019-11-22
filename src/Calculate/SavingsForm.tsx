@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 
-import { Heading3, Heading5 } from "../common/Typography";
+import { Heading3, Heading5, Heading2 } from "../common/Typography";
 import FormInput from "./FormInput";
 import Button from "~common/Button";
 import { CalculatorContext } from "~GlobalContext";
@@ -11,6 +11,9 @@ import { CalculatorContext } from "~GlobalContext";
 const Container = styled.div`
   width: 100%;
   margin-top: 132px;
+  @media screen and (max-width: 768px) {
+    margin-top: 80px;
+  }
 `;
 
 const FormContainer = styled.div`
@@ -65,11 +68,17 @@ const SavingsForm: React.FC = () => {
 
   return (
     <Container>
-      <Heading3 textAlign="center">Send Me the Savings!</Heading3>
-      <Heading5>
+      <Heading3 className="hideMobile" textAlign="center">
+        Send Me the Savings!
+      </Heading3>
+      <Heading5 className="hideMobile">
         Tell us a little bit about yourself and we'll email you a copy of your
         savings analysis.
       </Heading5>
+      <Heading2 className="mobileOnly">
+        See how we calculated your results with a detailed cost analysis
+        breakdown.
+      </Heading2>
       <form id="mktoForm_1628" style={{ display: "none" }}></form>
 
       <Formik

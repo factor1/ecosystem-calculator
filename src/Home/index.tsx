@@ -19,18 +19,29 @@ const Container = styled.div`
   padding: 64px 0;
   min-height: calc(100vh - 140px);
   text-align: center;
+
+  @media screen and (max-width: 768px) {
+    padding: 64px 18px;
+  }
 `;
 
 const CardContainer = styled.div`
   display: flex;
   width: 100%;
   position: relative;
-  flex-flow: row wrap;
-  justify-content: space-between;
-  align-items: stretch;
-  margin: 50px auto 0;
+  flex-flow: column;
   & > div + div {
-    margin-left: 34px;
+    margin-top: 34px;
+  }
+  @media screen and (min-width: 769px) {
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: stretch;
+    margin: 50px auto 0;
+    & > div + div {
+      margin-left: 34px;
+      margin-top: 0;
+    }
   }
 `;
 
@@ -39,6 +50,10 @@ const CardTitle = styled.span`
   text-align: center;
   font: 300 36px/44px Lato;
   letter-spacing: 0.9px;
+  @media screen and (max-width: 768px) {
+    font: 300 24px/29px Lato;
+    letter-spacing: 0.6px;
+  }
 `;
 
 const HelperText = styled.span`
