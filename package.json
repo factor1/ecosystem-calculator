@@ -43,6 +43,6 @@
   "scripts": {
     "start": "parcel src/index.html --open",
     "test": "tsc && eslint src/**/*.tsx && eslint src/**/*.ts",
-    "build": "rm -Rf dist && yarn test && parcel build src/index.html"
+    "build": "rm -Rf dist && yarn test && parcel build src/index.html --public-url /2019/gpsi"
   }
 }
