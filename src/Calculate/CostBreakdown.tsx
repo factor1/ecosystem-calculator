@@ -115,24 +115,7 @@ const CostBreakdown: React.FC = () => {
         <AfterHeading>Cost After GPS Insight</AfterHeading>
 
         {/* Cost of GPS Insight */}
-        <div data-tip data-for="costOf">
-          <ToolTipIcon />
-        </div>
-        <ReactTooltip
-          id="costOf"
-          effect="solid"
-          delayHide={1000}
-          className="actionToolTip"
-        >
-          GPS Insight Standard -{" "}
-          <a
-            href="https://www.gpsinsight.com/solutions"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            See all options
-          </a>
-        </ReactTooltip>
+        <ToolTipIcon fancyData={true} />
         <RowLabel>
           <Paragraph color={colors.midGrey}>Cost of GPS Insight</Paragraph>
         </RowLabel>
@@ -141,7 +124,7 @@ const CostBreakdown: React.FC = () => {
         <Divider />
 
         {/* Idling */}
-        <ToolTipIcon dataTip="Some info goes here" />
+        <ToolTipIcon dataTip="The U.S. Department of Energy estimates average commerical idling of 2 hrs/vehicle/day at a cost of $0.90/hour. We've seen customers reduce idling by 75% with alerts and driver coaching." />
         <RowLabel>
           <Paragraph color={colors.midGrey}>Idling</Paragraph>
         </RowLabel>
@@ -150,7 +133,7 @@ const CostBreakdown: React.FC = () => {
         <Divider />
 
         {/* Fuel Costs */}
-        <ToolTipIcon dataTip="Some info goes here" />
+        <ToolTipIcon dataTip="Improved driver behavior and routing can reduce fuel costs by 33% according to the U.S. EPA." />
         <RowLabel>
           <Paragraph color={colors.midGrey}>Fuel Costs</Paragraph>
         </RowLabel>
@@ -159,7 +142,7 @@ const CostBreakdown: React.FC = () => {
         <Divider />
 
         {/* Maintenance, Wear and Tear */}
-        <ToolTipIcon dataTip="Some info goes here" />
+        <ToolTipIcon dataTip="Commercial vehicle maintenance averages $0.10/mile according to the American Transportation Research Institute. Reducing mileage and improving preventative maintenance can save fleets 10-20%, according to consulting firm Accenture." />
         <RowLabel>
           <Paragraph color={colors.midGrey}>
             Maintenance, Wear and Tear
@@ -170,7 +153,7 @@ const CostBreakdown: React.FC = () => {
         <Divider />
 
         {/* Productivity Lost */}
-        <ToolTipIcon dataTip="Some info goes here" />
+        <ToolTipIcon dataTip="Around 12.5% of employee time is unproductive, according to staffing firm OfficeTeam. Improved accountability and efficiency with telematics can cut that in half." />
         <RowLabel>
           <Paragraph color={colors.midGrey}>Productivity Lost</Paragraph>
         </RowLabel>
@@ -179,7 +162,7 @@ const CostBreakdown: React.FC = () => {
         <Divider />
 
         {/* Out of Pocket Accident Cost */}
-        <ToolTipIcon dataTip="Some info goes here" />
+        <ToolTipIcon dataTip="Commercial accidents cost over $90,000 total on average. For this estimate, we looked at out of pocket costs only excluding injuries, ligitation, and property/cargo damage. According to the FMCSA, video and telematics solutions can reduce risky behavior and avoid accidents by 25%. Insurance premiums increase 50% on average after an accident, according to Nerdwallet." />
         <RowLabel>
           <Paragraph color={colors.midGrey}>
             Out of Pocket Accident Cost
@@ -190,7 +173,7 @@ const CostBreakdown: React.FC = () => {
         <Divider />
 
         {/* Total*/}
-        <ToolTipIcon dataTip="Some info goes here" />
+        <div style={{ width: 20, height: "100%" }} />
         <RowLabel>
           <Paragraph color={colors.midGrey}>Total</Paragraph>
         </RowLabel>
@@ -199,7 +182,7 @@ const CostBreakdown: React.FC = () => {
         <Divider />
 
         {/* Monthly Savings */}
-        <ToolTipIcon dataTip="Some info goes here" />
+        <div style={{ width: 20, height: "100%" }} />
         <RowLabel>
           <Paragraph color={colors.green}>Monthly Savings</Paragraph>
         </RowLabel>
