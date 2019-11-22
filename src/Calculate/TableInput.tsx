@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import { colors } from "../styles/theme";
-import { FormikTouched, FormikErrors } from "formik";
+import { FormikTouched, FormikErrors } from "formik"; // eslint-disable-line
 import ToolTipIcon from "../common/ToolTipIcon";
 
 interface Props {

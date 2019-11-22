@@ -42,6 +42,6 @@
   },
   "scripts": {
     "start": "parcel src/index.html --open",
-    "test": "tsc && eslint src/**/*"
+    "test": "tsc && eslint src/**/*.tsx && eslint src/**/*.ts"
   }
 }

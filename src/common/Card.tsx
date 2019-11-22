@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from "react";
 import styled from "styled-components";
 
@@ -21,6 +22,7 @@ const Wrapper = styled.div`
 `;
 
 const Card: React.FC<Props> = ({ children, width }) => {
+  // @ts-ignore
   return <Wrapper width={width}>{children}</Wrapper>;
 };
 

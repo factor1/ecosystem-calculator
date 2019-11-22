@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
-import ReactTooltip from "react-tooltip";
 
 import { colors } from "../styles/theme";
 import { Heading3, Paragraph } from "../common/Typography";
