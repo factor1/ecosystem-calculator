@@ -9,6 +9,7 @@
   "private": true,
   "devDependencies": {
     "@types/lodash": "^4.14.149",
+    "@types/react-aria-modal": "^4.0.1",
     "@types/react-helmet": "^5.0.14",
     "@types/react-router-dom": "^5.1.2",
     "@types/react-tooltip": "^3.11.0",
@@ -21,6 +22,9 @@
     "typescript": "^3.7.2"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.25",
+    "@fortawesome/free-solid-svg-icons": "^5.11.2",
+    "@fortawesome/react-fontawesome": "^0.1.7",
     "@types/react": "^16.9.11",
     "@types/react-dom": "^16.9.4",
     "@types/styled-components": "^4.4.0",
@@ -28,8 +32,9 @@
     "formik": "^2.0.4",
     "lodash": "^4.17.15",
     "normalize.css": "^8.0.1",
-    "react": "^16.11.0",
-    "react-dom": "^16.11.0",
+    "react": ">=0.14",
+    "react-aria-modal": "^4.0.0",
+    "react-dom": ">=0.14",
     "react-router-dom": "^5.1.2",
     "react-tooltip": "^3.11.1",
     "styled-components": "^4.4.1",
