@@ -27,8 +27,8 @@ const Container = styled.div`
   justify-content: space-between;
   align-items: center;
   flex-flow: row nowrap;
-  @media screen and (max-width: 768px) {
-    max-width: 380px;
+  @media screen and (max-width: 820px) {
+    max-width: 100%;
     height: 41px;
   }
 
@@ -48,7 +48,7 @@ const InputContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   background-color: #fff;
-  box-shadow: 0px 2px 2px #00000029;
+  box-shadow: 0px 2px 2px #0000003d;
   border-radius: 4px;
   height: 100%;
   padding-left: 15px;
@@ -86,6 +86,7 @@ const Input = styled.input`
   height: 100%;
   width: 148px;
   padding-right: 19px;
+  -moz-appearance: textfield;
 
   @media screen and (max-width: 768px) {
     font: 400 14px/17px Lato;
@@ -99,6 +100,18 @@ const ErrorMessage = styled.div`
   position: relative;
   font-weight: 600;
   color: red;
+  margin: 12px 0 0 48px;
+`;
+
+const Root = styled.div`
+  width: 100%;
+  @media screen and (min-width: 768px) {
+    padding: 0 50px;
+  }
+  @media screen and (min-width: 1024px) {
+    max-width: 420px;
+    padding: 0;
+  }
 `;
 
 const TableInput: React.FC<Props> = ({
@@ -119,7 +132,7 @@ const TableInput: React.FC<Props> = ({
   };
 
   return (
-    <>
+    <Root>
       <Container>
         {tooltip ? (
           <ToolTipIcon
@@ -165,7 +178,7 @@ const TableInput: React.FC<Props> = ({
       {touched[field.name] && errors[field.name] ? (
         <ErrorMessage>{errors[field.name]}</ErrorMessage>
       ) : null}
-    </>
+    </Root>
   );
 };
 

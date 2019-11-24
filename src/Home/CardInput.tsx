@@ -30,9 +30,10 @@ const StyledInput = styled.div`
     font: 400 72px/86px Lato;
     letter-spacing: 0;
     text-align: center;
-    padding-bottom: 24px;
     height: 86px;
     width: 100%;
+    -moz-appearance: textfield;
+    overflow: hidden;
     &::placeholder {
       color: ${colors.lightGrey};
     }
@@ -111,6 +112,7 @@ const CardInput: React.FC<Props> = ({
           name={name}
           type="number"
           placeholder={placeholder}
+          min="1"
           {...field}
         />
       </StyledInput>
