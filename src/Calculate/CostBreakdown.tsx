@@ -15,14 +15,20 @@ const Container = styled.div`
   @media screen and (max-width: 767px) {
     display: none;
   }
+  @media screen and (max-width: 1024px) {
+    padding: 0 32px;
+  }
 `;
 
 const Grid = styled.div`
   display: grid;
-  grid-template-columns: 20px auto 275px 275px;
+  grid-template-columns: 20px auto 1fr 1fr;
   grid-template-rows: auto;
   grid-gap: 38px 0;
   margin-top: 50px;
+  @media screen and (min-width: 1024px) {
+    grid-template-columns: 20px auto 275px 275px;
+  }
 `;
 
 const BeforeHeading = styled.div`
@@ -187,7 +193,6 @@ const CostBreakdown: React.FC = () => {
         </RowLabel>
         <BeforeValue>{""}</BeforeValue>
         <MonthlySavings>{formatNumber(monthlySavings)}</MonthlySavings>
-        <Divider />
       </Grid>
     </Container>
   );

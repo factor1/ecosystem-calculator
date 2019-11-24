@@ -29,7 +29,7 @@ const ButtonContainer = styled.div`
     min-height: 35px;
     max-width: 100%;
     border-radius: 4px;
-    background-color: ${colors.blue};
+    background-color: ${colors.red};
     font: 400 29px/35px Lato;
     letter-spacing: 0.72px;
     color: #fff;

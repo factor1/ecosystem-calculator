@@ -10,7 +10,7 @@ interface Props {
 const Wrapper = styled.div`
   position: relative;
   background-color: #fff;
-  box-shadow: 0px 3px 6px #0000001a;
+  box-shadow: 0px 3px 6px #0000003d;
   border-radius: 8px;
   padding: 24px;
   width: 100%;
