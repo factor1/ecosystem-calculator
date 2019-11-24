@@ -33,7 +33,7 @@ const CardContainer = styled.div`
   & > div + div {
     margin-top: 34px;
   }
-  @media screen and (min-width: 769px) {
+  @media screen and (min-width: 768px) {
     flex-flow: row wrap;
     justify-content: space-between;
     align-items: stretch;
@@ -80,7 +80,7 @@ const Home: React.FC<Props> = ({ history: { push } }) => {
       <Heading5>Discover how much GPS Insight can save your fleet.</Heading5>
       <Formik
         initialValues={{
-          fleetSize: "",
+          fleetSize: 20,
           averageWage: 56.72
         }}
         validationSchema={Yup.object().shape({

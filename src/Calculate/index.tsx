@@ -74,7 +74,7 @@ const FormWrapper = styled.div`
   position: relative;
   flex-flow: row wrap;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   & > div {
     margin-bottom: 30px;
   }

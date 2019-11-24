@@ -61,8 +61,8 @@ const Input = styled.input`
   background-color: ${colors.lightGrey};
   font: 400 20px/24px Lato;
   color: ${colors.blue};
-  text-align: right;
-  padding-right: 30px;
+  text-align: left;
+  padding: 0 30px;
 
   @media screen and (max-width: 768px) {
     font: 400 14px/17px Lato;
@@ -74,7 +74,12 @@ const ErrorMessage = styled.div`
   display: block;
   position: relative;
   color: #ff0000;
-  font-weight: bold;
+  align-self: flex-start;
+  width: 100%;
+  max-width: 608px;
+  font: 400 16px/19px Lato;
+  letter-spacing: 0.4px;
+  margin-left: 158px;
 `;
 
 const FormInput: React.FC<Props> = ({
