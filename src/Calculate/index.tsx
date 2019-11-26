@@ -38,7 +38,7 @@ const Savings = styled.div`
   text-align: center;
   margin-top: 7px;
   .grey {
-    color: ${colors.lightGrey};
+    color: ${colors.midGrey};
     font-weight: 400;
   }
   & sup {

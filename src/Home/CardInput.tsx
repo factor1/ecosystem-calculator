@@ -68,7 +68,6 @@ const ErrorWrapper = styled.div`
   display: block;
   flex: 1 1 100%;
   font-size: 14px;
-  font-weight: bold;
   color: #ff0000;
 `;
 
