@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import styled from "styled-components";
 import * as Yup from "yup";
 import { Formik, Form, Field } from "formik";
+import isEmpty from "lodash/isEmpty";
 
 import { CalculatorContext } from "../GlobalContext";
 import { colors } from "../styles/theme";
@@ -80,16 +81,16 @@ const Home: React.FC<Props> = ({ history: { push } }) => {
       <Heading5>Discover how much GPS Insight can save your fleet.</Heading5>
       <Formik
         initialValues={{
-          fleetSize: 20,
-          averageWage: 56.72
+          fleetSize: "",
+          averageWage: ""
         }}
         validationSchema={Yup.object().shape({
           fleetSize: Yup.number()
-            .positive()
-            .required("Fleet size is required"),
+            .positive("Fleet Size Must be a Positive Number")
+            .required("Fleet Size is Required"),
           averageWage: Yup.number()
-            .positive()
-            .required("Average wage is required")
+            .positive("Average Wage Must be a Positive Number")
+            .required("Average Wage is Required")
         })}
         onSubmit={(values, actions) => {
           handleInitialFormSubmit(values);
@@ -97,7 +98,7 @@ const Home: React.FC<Props> = ({ history: { push } }) => {
           return push("/calculate");
         }}
       >
-        {({ errors, touched, isSubmitting }) => (
+        {({ errors, touched, isSubmitting, isValid }) => (
           <Form>
             <CardContainer>
               <Card width={241}>
@@ -105,7 +106,6 @@ const Home: React.FC<Props> = ({ history: { push } }) => {
                 <Field
                   id="fleetSize"
                   name="fleetSize"
-                  placeholder="20"
                   component={CardInput}
                   errors={errors}
                   touched={touched}
@@ -128,7 +128,7 @@ const Home: React.FC<Props> = ({ history: { push } }) => {
             <Button
               type="submit"
               style={{ marginTop: 55 }}
-              disabled={isSubmitting}
+              disabled={isSubmitting || !isValid || isEmpty(touched)}
             >
               Calculate
             </Button>

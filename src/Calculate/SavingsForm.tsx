@@ -2,6 +2,7 @@ import React, { useEffect, useContext } from "react";
 import styled from "styled-components";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
+import isEmpty from "lodash/isEmpty";
 
 import { Heading3, Heading5, Heading2 } from "../common/Typography";
 import FormInput from "./FormInput";
@@ -141,7 +142,7 @@ const SavingsForm: React.FC = () => {
           }
         }}
       >
-        {({ errors, touched, isSubmitting }) => (
+        {({ errors, touched, isSubmitting, isValid }) => (
           <Form id="formikForm" style={{ width: "100%" }}>
             <FormContainer>
               <Field
@@ -178,9 +179,9 @@ const SavingsForm: React.FC = () => {
                 component={FormInput}
               />
               <Button
-                disabled={isSubmitting}
                 style={{ marginTop: 30 }}
                 type="submit"
+                disabled={!isValid || isSubmitting || isEmpty(touched)}
               >
                 Submit
               </Button>
