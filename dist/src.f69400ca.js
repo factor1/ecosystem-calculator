@@ -57956,7 +57956,444 @@ function split(string, separator, limit) {
 
 module.exports = split;
 
-},{"./_baseToString":"../node_modules/lodash/_baseToString.js","./_castSlice":"../node_modules/lodash/_castSlice.js","./_hasUnicode":"../node_modules/lodash/_hasUnicode.js","./_isIterateeCall":"../node_modules/lodash/_isIterateeCall.js","./isRegExp":"../node_modules/lodash/isRegExp.js","./_stringToArray":"../node_modules/lodash/_stringToArray.js","./toString":"../node_modules/lodash/toString.js"}],"../node_modules/tabbable/index.js":[function(require,module,exports) {
+},{"./_baseToString":"../node_modules/lodash/_baseToString.js","./_castSlice":"../node_modules/lodash/_castSlice.js","./_hasUnicode":"../node_modules/lodash/_hasUnicode.js","./_isIterateeCall":"../node_modules/lodash/_isIterateeCall.js","./isRegExp":"../node_modules/lodash/isRegExp.js","./_stringToArray":"../node_modules/lodash/_stringToArray.js","./toString":"../node_modules/lodash/toString.js"}],"../node_modules/strict-uri-encode/index.js":[function(require,module,exports) {
+'use strict';
+
+module.exports = str => encodeURIComponent(str).replace(/[!'()*]/g, x => "%".concat(x.charCodeAt(0).toString(16).toUpperCase()));
+},{}],"../node_modules/decode-uri-component/index.js":[function(require,module,exports) {
+'use strict';
+
+var token = '%[a-f0-9]{2}';
+var singleMatcher = new RegExp(token, 'gi');
+var multiMatcher = new RegExp('(' + token + ')+', 'gi');
+
+function decodeComponents(components, split) {
+  try {
+    // Try to decode the entire string first
+    return decodeURIComponent(components.join(''));
+  } catch (err) {// Do nothing
+  }
+
+  if (components.length === 1) {
+    return components;
+  }
+
+  split = split || 1; // Split the array in 2 parts
+
+  var left = components.slice(0, split);
+  var right = components.slice(split);
+  return Array.prototype.concat.call([], decodeComponents(left), decodeComponents(right));
+}
+
+function decode(input) {
+  try {
+    return decodeURIComponent(input);
+  } catch (err) {
+    var tokens = input.match(singleMatcher);
+
+    for (var i = 1; i < tokens.length; i++) {
+      input = decodeComponents(tokens, i).join('');
+      tokens = input.match(singleMatcher);
+    }
+
+    return input;
+  }
+}
+
+function customDecodeURIComponent(input) {
+  // Keep track of all the replacements and prefill the map with the `BOM`
+  var replaceMap = {
+    '%FE%FF': '\uFFFD\uFFFD',
+    '%FF%FE': '\uFFFD\uFFFD'
+  };
+  var match = multiMatcher.exec(input);
+
+  while (match) {
+    try {
+      // Decode as big chunks as possible
+      replaceMap[match[0]] = decodeURIComponent(match[0]);
+    } catch (err) {
+      var result = decode(match[0]);
+
+      if (result !== match[0]) {
+        replaceMap[match[0]] = result;
+      }
+    }
+
+    match = multiMatcher.exec(input);
+  } // Add `%C2` at the end of the map to make sure it does not replace the combinator before everything else
+
+
+  replaceMap['%C2'] = '\uFFFD';
+  var entries = Object.keys(replaceMap);
+
+  for (var i = 0; i < entries.length; i++) {
+    // Replace all decoded components
+    var key = entries[i];
+    input = input.replace(new RegExp(key, 'g'), replaceMap[key]);
+  }
+
+  return input;
+}
+
+module.exports = function (encodedURI) {
+  if (typeof encodedURI !== 'string') {
+    throw new TypeError('Expected `encodedURI` to be of type `string`, got `' + typeof encodedURI + '`');
+  }
+
+  try {
+    encodedURI = encodedURI.replace(/\+/g, ' '); // Try the built in decoder first
+
+    return decodeURIComponent(encodedURI);
+  } catch (err) {
+    // Fallback to a more advanced decoder
+    return customDecodeURIComponent(encodedURI);
+  }
+};
+},{}],"../node_modules/split-on-first/index.js":[function(require,module,exports) {
+'use strict';
+
+module.exports = function (string, separator) {
+  if (!(typeof string === 'string' && typeof separator === 'string')) {
+    throw new TypeError('Expected the arguments to be of type `string`');
+  }
+
+  if (separator === '') {
+    return [string];
+  }
+
+  var separatorIndex = string.indexOf(separator);
+
+  if (separatorIndex === -1) {
+    return [string];
+  }
+
+  return [string.slice(0, separatorIndex), string.slice(separatorIndex + separator.length)];
+};
+},{}],"../node_modules/query-string/index.js":[function(require,module,exports) {
+'use strict';
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function (obj) { return typeof obj; }; } else { _typeof = function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+var strictUriEncode = require('strict-uri-encode');
+
+var decodeComponent = require('decode-uri-component');
+
+var splitOnFirst = require('split-on-first');
+
+function encoderForArrayFormat(options) {
+  switch (options.arrayFormat) {
+    case 'index':
+      return function (key) {
+        return function (result, value) {
+          var index = result.length;
+
+          if (value === undefined || options.skipNull && value === null) {
+            return result;
+          }
+
+          if (value === null) {
+            return [].concat(_toConsumableArray(result), [[encode(key, options), '[', index, ']'].join('')]);
+          }
+
+          return [].concat(_toConsumableArray(result), [[encode(key, options), '[', encode(index, options), ']=', encode(value, options)].join('')]);
+        };
+      };
+
+    case 'bracket':
+      return function (key) {
+        return function (result, value) {
+          if (value === undefined || options.skipNull && value === null) {
+            return result;
+          }
+
+          if (value === null) {
+            return [].concat(_toConsumableArray(result), [[encode(key, options), '[]'].join('')]);
+          }
+
+          return [].concat(_toConsumableArray(result), [[encode(key, options), '[]=', encode(value, options)].join('')]);
+        };
+      };
+
+    case 'comma':
+      return function (key) {
+        return function (result, value) {
+          if (value === null || value === undefined || value.length === 0) {
+            return result;
+          }
+
+          if (result.length === 0) {
+            return [[encode(key, options), '=', encode(value, options)].join('')];
+          }
+
+          return [[result, encode(value, options)].join(',')];
+        };
+      };
+
+    default:
+      return function (key) {
+        return function (result, value) {
+          if (value === undefined || options.skipNull && value === null) {
+            return result;
+          }
+
+          if (value === null) {
+            return [].concat(_toConsumableArray(result), [encode(key, options)]);
+          }
+
+          return [].concat(_toConsumableArray(result), [[encode(key, options), '=', encode(value, options)].join('')]);
+        };
+      };
+  }
+}
+
+function parserForArrayFormat(options) {
+  var result;
+
+  switch (options.arrayFormat) {
+    case 'index':
+      return function (key, value, accumulator) {
+        result = /\[(\d*)\]$/.exec(key);
+        key = key.replace(/\[\d*\]$/, '');
+
+        if (!result) {
+          accumulator[key] = value;
+          return;
+        }
+
+        if (accumulator[key] === undefined) {
+          accumulator[key] = {};
+        }
+
+        accumulator[key][result[1]] = value;
+      };
+
+    case 'bracket':
+      return function (key, value, accumulator) {
+        result = /(\[\])$/.exec(key);
+        key = key.replace(/\[\]$/, '');
+
+        if (!result) {
+          accumulator[key] = value;
+          return;
+        }
+
+        if (accumulator[key] === undefined) {
+          accumulator[key] = [value];
+          return;
+        }
+
+        accumulator[key] = [].concat(accumulator[key], value);
+      };
+
+    case 'comma':
+      return function (key, value, accumulator) {
+        var isArray = typeof value === 'string' && value.split('').indexOf(',') > -1;
+        var newValue = isArray ? value.split(',') : value;
+        accumulator[key] = newValue;
+      };
+
+    default:
+      return function (key, value, accumulator) {
+        if (accumulator[key] === undefined) {
+          accumulator[key] = value;
+          return;
+        }
+
+        accumulator[key] = [].concat(accumulator[key], value);
+      };
+  }
+}
+
+function encode(value, options) {
+  if (options.encode) {
+    return options.strict ? strictUriEncode(value) : encodeURIComponent(value);
+  }
+
+  return value;
+}
+
+function decode(value, options) {
+  if (options.decode) {
+    return decodeComponent(value);
+  }
+
+  return value;
+}
+
+function keysSorter(input) {
+  if (Array.isArray(input)) {
+    return input.sort();
+  }
+
+  if (_typeof(input) === 'object') {
+    return keysSorter(Object.keys(input)).sort(function (a, b) {
+      return Number(a) - Number(b);
+    }).map(function (key) {
+      return input[key];
+    });
+  }
+
+  return input;
+}
+
+function removeHash(input) {
+  var hashStart = input.indexOf('#');
+
+  if (hashStart !== -1) {
+    input = input.slice(0, hashStart);
+  }
+
+  return input;
+}
+
+function extract(input) {
+  input = removeHash(input);
+  var queryStart = input.indexOf('?');
+
+  if (queryStart === -1) {
+    return '';
+  }
+
+  return input.slice(queryStart + 1);
+}
+
+function parseValue(value, options) {
+  if (options.parseNumbers && !Number.isNaN(Number(value)) && typeof value === 'string' && value.trim() !== '') {
+    value = Number(value);
+  } else if (options.parseBooleans && value !== null && (value.toLowerCase() === 'true' || value.toLowerCase() === 'false')) {
+    value = value.toLowerCase() === 'true';
+  }
+
+  return value;
+}
+
+function parse(input, options) {
+  options = Object.assign({
+    decode: true,
+    sort: true,
+    arrayFormat: 'none',
+    parseNumbers: false,
+    parseBooleans: false
+  }, options);
+  var formatter = parserForArrayFormat(options); // Create an object with no prototype
+
+  var ret = Object.create(null);
+
+  if (typeof input !== 'string') {
+    return ret;
+  }
+
+  input = input.trim().replace(/^[?#&]/, '');
+
+  if (!input) {
+    return ret;
+  }
+
+  for (var param of input.split('&')) {
+    var [key, value] = splitOnFirst(options.decode ? param.replace(/\+/g, ' ') : param, '='); // Missing `=` should be `null`:
+    // http://w3.org/TR/2012/WD-url-20120524/#collect-url-parameters
+
+    value = value === undefined ? null : decode(value, options);
+    formatter(decode(key, options), value, ret);
+  }
+
+  for (var _key of Object.keys(ret)) {
+    var _value = ret[_key];
+
+    if (_typeof(_value) === 'object' && _value !== null) {
+      for (var k of Object.keys(_value)) {
+        _value[k] = parseValue(_value[k], options);
+      }
+    } else {
+      ret[_key] = parseValue(_value, options);
+    }
+  }
+
+  if (options.sort === false) {
+    return ret;
+  }
+
+  return (options.sort === true ? Object.keys(ret).sort() : Object.keys(ret).sort(options.sort)).reduce(function (result, key) {
+    var value = ret[key];
+
+    if (Boolean(value) && _typeof(value) === 'object' && !Array.isArray(value)) {
+      // Sort object keys, not values
+      result[key] = keysSorter(value);
+    } else {
+      result[key] = value;
+    }
+
+    return result;
+  }, Object.create(null));
+}
+
+exports.extract = extract;
+exports.parse = parse;
+
+exports.stringify = function (object, options) {
+  if (!object) {
+    return '';
+  }
+
+  options = Object.assign({
+    encode: true,
+    strict: true,
+    arrayFormat: 'none'
+  }, options);
+  var formatter = encoderForArrayFormat(options);
+  var objectCopy = Object.assign({}, object);
+
+  if (options.skipNull) {
+    for (var key of Object.keys(objectCopy)) {
+      if (objectCopy[key] === undefined || objectCopy[key] === null) {
+        delete objectCopy[key];
+      }
+    }
+  }
+
+  var keys = Object.keys(objectCopy);
+
+  if (options.sort !== false) {
+    keys.sort(options.sort);
+  }
+
+  return keys.map(function (key) {
+    var value = object[key];
+
+    if (value === undefined) {
+      return '';
+    }
+
+    if (value === null) {
+      return encode(key, options);
+    }
+
+    if (Array.isArray(value)) {
+      return value.reduce(formatter(key), []).join('&');
+    }
+
+    return encode(key, options) + '=' + encode(value, options);
+  }).filter(function (x) {
+    return x.length > 0;
+  }).join('&');
+};
+
+exports.parseUrl = function (input, options) {
+  return {
+    url: removeHash(input).split('?')[0] || '',
+    query: parse(extract(input), options)
+  };
+};
+},{"strict-uri-encode":"../node_modules/strict-uri-encode/index.js","decode-uri-component":"../node_modules/decode-uri-component/index.js","split-on-first":"../node_modules/split-on-first/index.js"}],"../node_modules/tabbable/index.js":[function(require,module,exports) {
 var candidateSelectors = [
   'input',
   'select',
@@ -69375,6 +69812,8 @@ var toString_1 = __importDefault(require("lodash/toString"));
 
 var split_1 = __importDefault(require("lodash/split"));
 
+var query_string_1 = __importDefault(require("query-string"));
+
 var Typography_1 = require("../common/Typography");
 
 var theme_1 = require("../styles/theme");
@@ -69392,19 +69831,32 @@ var Savings = styled_components_1.default.div(templateObject_2 || (templateObjec
 var TableHeading = styled_components_1.default.div(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n  display: block;\n  position: relative;\n  width: 100%;\n  margin-top: 50px;\n  .ttu {\n    text-transform: uppercase;\n    margin-bottom: 0;\n    @media screen and (max-width: 768px) {\n      text-align: center;\n    }\n  }\n  h4 {\n    margin-top: 14px;\n  }\n"], ["\n  display: block;\n  position: relative;\n  width: 100%;\n  margin-top: 50px;\n  .ttu {\n    text-transform: uppercase;\n    margin-bottom: 0;\n    @media screen and (max-width: 768px) {\n      text-align: center;\n    }\n  }\n  h4 {\n    margin-top: 14px;\n  }\n"])));
 var FormWrapper = styled_components_1.default.div(templateObject_4 || (templateObject_4 = __makeTemplateObject(["\n  display: flex;\n  position: relative;\n  flex-flow: row wrap;\n  justify-content: space-between;\n  align-items: flex-start;\n  & > div {\n    margin-bottom: 30px;\n  }\n\n  @media screen and (max-width: 768px) {\n    flex-flow: column;\n  }\n"], ["\n  display: flex;\n  position: relative;\n  flex-flow: row wrap;\n  justify-content: space-between;\n  align-items: flex-start;\n  & > div {\n    margin-bottom: 30px;\n  }\n\n  @media screen and (max-width: 768px) {\n    flex-flow: column;\n  }\n"])));
 
-var Caluclate = function Caluclate() {
-  var _a = react_1.useContext(GlobalContext_1.CalculatorContext),
-      hoursWorkedPerDay = _a.hoursWorkedPerDay,
-      averageDailyMiles = _a.averageDailyMiles,
-      daysWorkedPerMonth = _a.daysWorkedPerMonth,
-      averageDailyIdling = _a.averageDailyIdling,
-      yearlyInsurancePremium = _a.yearlyInsurancePremium,
-      averageVehicleMPG = _a.averageVehicleMPG,
-      insuranceDeductible = _a.insuranceDeductible,
-      accidentsPerYear = _a.accidentsPerYear,
-      fuelCost = _a.fuelCost,
-      handleFormSubmit = _a.handleFormSubmit,
-      monthlySavings = _a.monthlySavings;
+var Caluclate = function Caluclate(_a) {
+  var search = _a.location.search;
+
+  var _b = react_1.useContext(GlobalContext_1.CalculatorContext),
+      hoursWorkedPerDay = _b.hoursWorkedPerDay,
+      averageDailyMiles = _b.averageDailyMiles,
+      daysWorkedPerMonth = _b.daysWorkedPerMonth,
+      averageDailyIdling = _b.averageDailyIdling,
+      yearlyInsurancePremium = _b.yearlyInsurancePremium,
+      averageVehicleMPG = _b.averageVehicleMPG,
+      insuranceDeductible = _b.insuranceDeductible,
+      accidentsPerYear = _b.accidentsPerYear,
+      fuelCost = _b.fuelCost,
+      handleFormSubmit = _b.handleFormSubmit,
+      monthlySavings = _b.monthlySavings;
+
+  var _c = react_1.useState({
+    insideSale: false
+  }),
+      queryStrings = _c[0],
+      setQueryStrings = _c[1];
+
+  react_1.useEffect(function () {
+    var queryStrings = query_string_1.default.parse(search);
+    return setQueryStrings(queryStrings);
+  }, [search]);
 
   var renderMonthlySavings = function renderMonthlySavings(value) {
     var transformedSavings = split_1.default(toString_1.default(monthlySavings.toFixed(2)), ".");
@@ -69541,12 +69993,12 @@ var Caluclate = function Caluclate() {
       touched: touched,
       handleSubmit: handleSubmit
     })));
-  }), react_1.default.createElement(CostBreakdown_1.default, null), react_1.default.createElement(SavingsForm_1.default, null));
+  }), react_1.default.createElement(CostBreakdown_1.default, null), !queryStrings.insideSale ? react_1.default.createElement(SavingsForm_1.default, null) : null);
 };
 
 exports.default = Caluclate;
 var templateObject_1, templateObject_2, templateObject_3, templateObject_4;
-},{"react":"../node_modules/react/index.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","formik":"../node_modules/formik/dist/formik.esm.js","yup":"../node_modules/yup/lib/index.js","lodash/toString":"../node_modules/lodash/toString.js","lodash/split":"../node_modules/lodash/split.js","../common/Typography":"common/Typography.tsx","../styles/theme":"styles/theme.ts","./TableInput":"Calculate/TableInput.tsx","../GlobalContext":"GlobalContext/index.tsx","./CostBreakdown":"Calculate/CostBreakdown.tsx","./SavingsForm":"Calculate/SavingsForm.tsx"}],"App.tsx":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","formik":"../node_modules/formik/dist/formik.esm.js","yup":"../node_modules/yup/lib/index.js","lodash/toString":"../node_modules/lodash/toString.js","lodash/split":"../node_modules/lodash/split.js","query-string":"../node_modules/query-string/index.js","../common/Typography":"common/Typography.tsx","../styles/theme":"styles/theme.ts","./TableInput":"Calculate/TableInput.tsx","../GlobalContext":"GlobalContext/index.tsx","./CostBreakdown":"Calculate/CostBreakdown.tsx","./SavingsForm":"Calculate/SavingsForm.tsx"}],"App.tsx":[function(require,module,exports) {
 "use strict";
 
 var __importDefault = this && this.__importDefault || function (mod) {
@@ -69636,7 +70088,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33633" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "35449" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
