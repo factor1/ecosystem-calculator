@@ -286,7 +286,7 @@ export class ContextProvider extends Component<
     }
 
     const productivityLostBefore =
-      averageWage *
+      Number(averageWage) *
       daysWorkedPerMonth *
       hoursWorkedPerDay *
       0.125 *

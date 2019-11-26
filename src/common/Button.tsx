@@ -14,36 +14,6 @@ interface Props {
   disabled?: boolean;
 }
 
-const ButtonContainer = styled.div`
-  display: inline-block;
-  position: relative;
-  & a,
-  input,
-  button {
-    display: flex;
-    position: relative;
-    justify-content: center;
-    align-items: center;
-    width: 182px;
-    padding: 7px 24px 10px;
-    min-height: 35px;
-    max-width: 100%;
-    border-radius: 4px;
-    background-color: ${colors.red};
-    font: 400 29px/35px Lato;
-    letter-spacing: 0.72px;
-    color: #fff;
-    appearance: none;
-    border: none;
-    text-decoration: none;
-    cursor: pointer;
-    transition: opacity 250ms ease;
-    &:hover {
-      opacity: 0.85;
-    }
-  }
-`;
-
 const Button: React.FC<Props> = ({
   children,
   to,
