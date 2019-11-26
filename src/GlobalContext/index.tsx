@@ -8,7 +8,7 @@ interface GlobalContextProps {
 
 interface ContextState {
   fleetSize: number | string | null;
-  averageWage: number | null;
+  averageWage: number | string | null;
   fuelCost: number | string | null;
   hoursWorkedPerDay: number | null;
   averageDailyMiles: number | null;
@@ -36,7 +36,7 @@ interface ContextState {
 
 interface ContextValues {
   fleetSize: number | string | null;
-  averageWage: number | null;
+  averageWage: number | string | null;
   fuelCost: number | string | null;
   hoursWorkedPerDay: number | null;
   averageDailyMiles: number | null;
@@ -78,7 +78,7 @@ interface FormValues {
 
 interface InitialFormValues {
   fleetSize: number | string;
-  averageWage: number;
+  averageWage: number | string;
 }
 
 export const CalculatorContext = React.createContext<ContextValues>({
@@ -125,11 +125,11 @@ export class ContextProvider extends Component<
       hoursWorkedPerDay: 8,
       averageDailyMiles: 80,
       daysWorkedPerMonth: 20,
-      averageDailyIdling: 120,
+      averageDailyIdling: 0,
       yearlyInsurancePremium: 985,
       averageVehicleMPG: 18,
       insuranceDeductible: 500,
-      accidentsPerYear: 3.4,
+      accidentsPerYear: 0,
       idleCostBefore: 0,
       idleCostAfter: 0,
       gpsInsightCost: 0.0,
@@ -176,6 +176,7 @@ export class ContextProvider extends Component<
 
   runCalculations = () => {
     const initialValues = new Promise(resolve => {
+      this.calculateAverageDailyIdling();
       this.calculateIdle();
       this.calculateGPSCost();
       this.calculateFuelCosts();
@@ -186,6 +187,18 @@ export class ContextProvider extends Component<
     });
 
     initialValues.then(() => this.calculateTotals());
+  };
+
+  calculateAverageDailyIdling = () => {
+    const { fleetSize } = this.state;
+
+    if (!fleetSize) {
+      return;
+    }
+
+    const averageDailyIdling = Number(fleetSize) * 2;
+
+    return this.setState({ averageDailyIdling });
   };
 
   calculateIdle = () => {
@@ -282,6 +295,17 @@ export class ContextProvider extends Component<
     const productivityLostAfter = productivityLostBefore / 2;
 
     return this.setState({ productivityLostBefore, productivityLostAfter });
+  };
+
+  calculateAccidentsPerYear = () => {
+    const { fleetSize } = this.state;
+    if (!fleetSize) {
+      return null;
+    }
+
+    const accidentsPerYear = Number(fleetSize) * 0.2;
+
+    return this.setState({ accidentsPerYear });
   };
 
   calculateAccidentCost = () => {

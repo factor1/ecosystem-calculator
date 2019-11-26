@@ -98,7 +98,7 @@ const Input = styled.input`
 const ErrorMessage = styled.div`
   display: block;
   position: relative;
-  font-weight: 600;
+  font-weight: 400;
   color: red;
   margin: 12px 0 0 48px;
 `;
