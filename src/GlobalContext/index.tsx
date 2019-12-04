@@ -304,7 +304,7 @@ export class ContextProvider extends Component<
       return null;
     }
 
-    const accidentsPerYear = Number(fleetSize) * 0.2;
+    const accidentsPerYear = Number((Number(fleetSize) * 0.2).toFixed(2));
 
     return this.setState({ accidentsPerYear });
   };

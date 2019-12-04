@@ -9,7 +9,6 @@ import { colors } from "../styles/theme";
 import { Heading2, Heading5 } from "../common/Typography";
 import Card from "../common/Card";
 import CardInput from "./CardInput";
-import Button from "../common/Button";
 
 const Container = styled.div`
   display: flex;

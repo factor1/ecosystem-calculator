@@ -12,7 +12,7 @@ const App: React.FC = () => {
   return (
     <div>
       <ContextProvider>
-        <Router basename="/2019/gpsi">
+        <Router basename="/2019/gpsi/wp/calculate">
           <Route exact path="/" component={Home} />
           <Route exact path="/calculate" component={Calculate} />
         </Router>

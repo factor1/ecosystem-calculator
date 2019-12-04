@@ -37945,7 +37945,7 @@ function (_super) {
         return null;
       }
 
-      var accidentsPerYear = Number(fleetSize) * 0.2;
+      var accidentsPerYear = Number((Number(fleetSize) * 0.2).toFixed(2));
       return _this.setState({
         accidentsPerYear: accidentsPerYear
       });
@@ -69478,75 +69478,7 @@ var FormInput = function FormInput(_a) {
 
 exports.default = FormInput;
 var templateObject_1, templateObject_2, templateObject_3, templateObject_4;
-},{"react":"../node_modules/react/index.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","../styles/theme":"styles/theme.ts"}],"common/Button.tsx":[function(require,module,exports) {
-"use strict";
-
-var __makeTemplateObject = this && this.__makeTemplateObject || function (cooked, raw) {
-  if (Object.defineProperty) {
-    Object.defineProperty(cooked, "raw", {
-      value: raw
-    });
-  } else {
-    cooked.raw = raw;
-  }
-
-  return cooked;
-};
-
-var __importDefault = this && this.__importDefault || function (mod) {
-  return mod && mod.__esModule ? mod : {
-    "default": mod
-  };
-};
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var react_1 = __importDefault(require("react"));
-
-var styled_components_1 = __importDefault(require("styled-components"));
-
-var react_router_dom_1 = require("react-router-dom");
-
-var theme_1 = require("../styles/theme");
-
-var Button = function Button(_a) {
-  var children = _a.children,
-      to = _a.to,
-      href = _a.href,
-      onClick = _a.onClick,
-      style = _a.style,
-      disabled = _a.disabled;
-  var ButtonContainer = styled_components_1.default.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n    display: inline-block;\n    position: relative;\n    & a,\n    input,\n    button {\n      display: flex;\n      position: relative;\n      justify-content: center;\n      align-items: center;\n      width: 182px;\n      padding: 7px 24px 10px;\n      min-height: 35px;\n      max-width: 100%;\n      border-radius: 4px;\n      background-color: ", ";\n      font: 400 29px/35px Lato;\n      letter-spacing: 0.72px;\n      color: #fff;\n      appearance: none;\n      border: none;\n      text-decoration: none;\n      cursor: pointer;\n      transition: opacity 250ms ease;\n      &:hover {\n        opacity: 0.85;\n      }\n    }\n  "], ["\n    display: inline-block;\n    position: relative;\n    & a,\n    input,\n    button {\n      display: flex;\n      position: relative;\n      justify-content: center;\n      align-items: center;\n      width: 182px;\n      padding: 7px 24px 10px;\n      min-height: 35px;\n      max-width: 100%;\n      border-radius: 4px;\n      background-color: ", ";\n      font: 400 29px/35px Lato;\n      letter-spacing: 0.72px;\n      color: #fff;\n      appearance: none;\n      border: none;\n      text-decoration: none;\n      cursor: pointer;\n      transition: opacity 250ms ease;\n      &:hover {\n        opacity: 0.85;\n      }\n    }\n  "])), !disabled ? theme_1.colors.red : theme_1.colors.lightGrey);
-
-  if (to) {
-    return react_1.default.createElement(ButtonContainer, null, react_1.default.createElement(react_router_dom_1.Link, {
-      onClick: onClick,
-      role: "button",
-      to: to,
-      style: style
-    }, children));
-  }
-
-  if (href) {
-    return react_1.default.createElement(ButtonContainer, null, react_1.default.createElement("a", {
-      href: href,
-      onClick: onClick,
-      role: "button",
-      style: style
-    }, children));
-  }
-
-  return react_1.default.createElement(ButtonContainer, null, react_1.default.createElement("button", {
-    onClick: onClick,
-    style: style
-  }, children));
-};
-
-exports.default = Button;
-var templateObject_1;
-},{"react":"../node_modules/react/index.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","../styles/theme":"styles/theme.ts"}],"Calculate/SavingsForm.tsx":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","../styles/theme":"styles/theme.ts"}],"Calculate/SavingsForm.tsx":[function(require,module,exports) {
 "use strict";
 
 var __makeTemplateObject = this && this.__makeTemplateObject || function (cooked, raw) {
@@ -69594,8 +69526,6 @@ var isEmpty_1 = __importDefault(require("lodash/isEmpty"));
 var Typography_1 = require("../common/Typography");
 
 var FormInput_1 = __importDefault(require("./FormInput"));
-
-var Button_1 = __importDefault(require("../common/Button"));
 
 var GlobalContext_1 = require("../GlobalContext");
 
@@ -69745,19 +69675,22 @@ var SavingsForm = function SavingsForm() {
       label: "Email",
       type: "email",
       component: FormInput_1.default
-    }), react_1.default.createElement(Button_1.default, {
+    }), react_1.default.createElement("div", {
+      className: "submit-btn"
+    }, react_1.default.createElement("input", {
       style: {
         marginTop: 30
       },
       type: "submit",
-      disabled: !isValid || isSubmitting || isEmpty_1.default(touched)
-    }, "Submit")));
+      disabled: !isValid || isSubmitting || isEmpty_1.default(touched),
+      value: "Submit"
+    }))));
   }));
 };
 
 exports.default = SavingsForm;
 var templateObject_1, templateObject_2;
-},{"react":"../node_modules/react/index.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","formik":"../node_modules/formik/dist/formik.esm.js","yup":"../node_modules/yup/lib/index.js","lodash/isEmpty":"../node_modules/lodash/isEmpty.js","../common/Typography":"common/Typography.tsx","./FormInput":"Calculate/FormInput.tsx","../common/Button":"common/Button.tsx","../GlobalContext":"GlobalContext/index.tsx"}],"Calculate/index.tsx":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","formik":"../node_modules/formik/dist/formik.esm.js","yup":"../node_modules/yup/lib/index.js","lodash/isEmpty":"../node_modules/lodash/isEmpty.js","../common/Typography":"common/Typography.tsx","./FormInput":"Calculate/FormInput.tsx","../GlobalContext":"GlobalContext/index.tsx"}],"Calculate/index.tsx":[function(require,module,exports) {
 "use strict";
 
 var __makeTemplateObject = this && this.__makeTemplateObject || function (cooked, raw) {
@@ -70019,7 +69952,7 @@ var Calculate_1 = __importDefault(require("./Calculate"));
 
 var App = function App() {
   return react_1.default.createElement("div", null, react_1.default.createElement(GlobalContext_1.ContextProvider, null, react_1.default.createElement(react_router_dom_1.BrowserRouter, {
-    basename: "/2019/gpsi"
+    basename: "/2019/gpsi/wp/calculate"
   }, react_1.default.createElement(react_router_dom_1.Route, {
     exact: true,
     path: "/",
@@ -70080,7 +70013,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "39705" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33095" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

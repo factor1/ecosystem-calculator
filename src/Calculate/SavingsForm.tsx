@@ -6,7 +6,6 @@ import isEmpty from "lodash/isEmpty";
 
 import { Heading3, Heading5, Heading2 } from "../common/Typography";
 import FormInput from "./FormInput";
-import Button from "../common/Button";
 import { CalculatorContext } from "../GlobalContext";
 
 const Container = styled.div`
@@ -178,13 +177,14 @@ const SavingsForm: React.FC = () => {
                 type="email"
                 component={FormInput}
               />
-              <Button
-                style={{ marginTop: 30 }}
-                type="submit"
-                disabled={!isValid || isSubmitting || isEmpty(touched)}
-              >
-                Submit
-              </Button>
+              <div className="submit-btn">
+                <input
+                  style={{ marginTop: 30 }}
+                  type="submit"
+                  disabled={!isValid || isSubmitting || isEmpty(touched)}
+                  value="Submit"
+                />
+              </div>
             </FormContainer>
           </Form>
         )}
