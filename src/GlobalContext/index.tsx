@@ -183,6 +183,7 @@ export class ContextProvider extends Component<
       this.calculateMaintenance();
       this.calculateProductivity();
       this.calculateAccidentCost();
+      this.calculateAccidentsPerYear();
       resolve();
     });
 
