@@ -34,3 +34,41 @@ html {
     display: none !important;
   }
 }
+
+.submit-btn {
+  display: inline-block;
+  position: relative;
+}
+
+.submit-btn a,
+.submit-btn input,
+.submit-btn button {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  width: 182px;
+  padding: 7px 24px 10px;
+  min-height: 35px;
+  max-width: 100%;
+  border-radius: 4px;
+  background-color: #e01f28;
+  font: 400 29px/35px Lato;
+  letter-spacing: 0.72px;
+  color: #fff;
+  appearance: none;
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 250ms ease;
+}
+
+.submit-btn a:hover,
+.submit-btn input:hover,
+.submit-btn button:hover {
+  opacity: 0.85;
+}
+
+.submit-btn button:disabled {
+  background-color: #949494;
+}

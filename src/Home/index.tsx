@@ -80,6 +80,7 @@ const Home: React.FC<Props> = ({ history: { push } }) => {
       <Heading2>Savings Calculator</Heading2>
       <Heading5>Discover how much GPS Insight can save your fleet.</Heading5>
       <Formik
+        enableReinitialize
         initialValues={{
           fleetSize: "",
           averageWage: ""
@@ -125,13 +126,13 @@ const Home: React.FC<Props> = ({ history: { push } }) => {
                 <HelperText>Average Wage per Hour</HelperText>
               </Card>
             </CardContainer>
-            <Button
-              type="submit"
-              style={{ marginTop: 55 }}
-              disabled={isSubmitting || !isValid || isEmpty(touched)}
-            >
-              Calculate
-            </Button>
+            <div className="submit-btn">
+              <input
+                type="submit"
+                style={{ marginTop: 55, zIndex: 99 }}
+                disabled={isSubmitting || !isValid || isEmpty(touched)}
+              />
+            </div>
           </Form>
         )}
       </Formik>
