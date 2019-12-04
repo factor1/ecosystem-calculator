@@ -159,31 +159,31 @@ const Caluclate: React.FC<Props> = ({ location: { search } }) => {
         }}
         validationSchema={Yup.object().shape({
           fuelCost: Yup.number()
-            .positive()
+            .positive("Must be a Positive Number")
             .required("Fuel cost is required"),
           hoursWorkedPerDay: Yup.number()
-            .positive()
+            .positive("Must be a Positive Number")
             .required("Hours Worked Per Day is required"),
           averageDailyMiles: Yup.number()
-            .positive()
+            .positive("Must be a Positive Number")
             .required("Average daily miles is required"),
           daysWorkedPerMonth: Yup.number()
-            .positive()
+            .positive("Must be a Positive Number")
             .required("Days worked per month is required"),
           averageDailyIdling: Yup.number()
-            .positive()
+            .positive("Must be a Positive Number")
             .required("Average daily idling is required"),
           yearlyInsurancePremium: Yup.number()
-            .positive()
+            .positive("Must be a Positive Number")
             .required("Yearly insurance premium is required"),
           averageVehicleMPG: Yup.number()
-            .positive()
+            .positive("Must be a Positive Number")
             .required("Average vehicle MPG is required"),
           insuranceDeductible: Yup.number()
-            .positive()
+            .positive("Must be a Positive Number")
             .required("Insurance deductible is required"),
           accidentsPerYear: Yup.number()
-            .positive()
+            .positive("Must be a Positive Number")
             .required("Accidents per year is required")
         })}
         onSubmit={(values, actions) => {

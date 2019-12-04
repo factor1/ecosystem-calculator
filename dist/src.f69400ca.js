@@ -69878,15 +69878,15 @@ var Caluclate = function Caluclate(_a) {
       accidentsPerYear: accidentsPerYear
     },
     validationSchema: Yup.object().shape({
-      fuelCost: Yup.number().positive().required("Fuel cost is required"),
-      hoursWorkedPerDay: Yup.number().positive().required("Hours Worked Per Day is required"),
-      averageDailyMiles: Yup.number().positive().required("Average daily miles is required"),
-      daysWorkedPerMonth: Yup.number().positive().required("Days worked per month is required"),
-      averageDailyIdling: Yup.number().positive().required("Average daily idling is required"),
-      yearlyInsurancePremium: Yup.number().positive().required("Yearly insurance premium is required"),
-      averageVehicleMPG: Yup.number().positive().required("Average vehicle MPG is required"),
-      insuranceDeductible: Yup.number().positive().required("Insurance deductible is required"),
-      accidentsPerYear: Yup.number().positive().required("Accidents per year is required")
+      fuelCost: Yup.number().positive("Must be a Positive Number").required("Fuel cost is required"),
+      hoursWorkedPerDay: Yup.number().positive("Must be a Positive Number").required("Hours Worked Per Day is required"),
+      averageDailyMiles: Yup.number().positive("Must be a Positive Number").required("Average daily miles is required"),
+      daysWorkedPerMonth: Yup.number().positive("Must be a Positive Number").required("Days worked per month is required"),
+      averageDailyIdling: Yup.number().positive("Must be a Positive Number").required("Average daily idling is required"),
+      yearlyInsurancePremium: Yup.number().positive("Must be a Positive Number").required("Yearly insurance premium is required"),
+      averageVehicleMPG: Yup.number().positive("Must be a Positive Number").required("Average vehicle MPG is required"),
+      insuranceDeductible: Yup.number().positive("Must be a Positive Number").required("Insurance deductible is required"),
+      accidentsPerYear: Yup.number().positive("Must be a Positive Number").required("Accidents per year is required")
     }),
     onSubmit: function onSubmit(values, actions) {
       handleFormSubmit(values);
@@ -70080,7 +70080,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33039" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "39705" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
