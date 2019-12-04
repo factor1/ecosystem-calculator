@@ -1,6 +1,6 @@
 {
   "name": "gpsinsight-savings-calculator",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A saving calculator for GPS Insight",
   "main": "build/index.js",
   "repository": "https://github.com/factor1/gpsinsight-savings-calculator",
