@@ -10,7 +10,6 @@ interface Props {
   href?: string;
   onClick?: any;
   style?: Object;
-  type?: string;
   disabled?: boolean;
 }
 
@@ -20,7 +19,6 @@ const Button: React.FC<Props> = ({
   href,
   onClick,
   style,
-  type,
   disabled
 }) => {
   const ButtonContainer = styled.div`
@@ -69,19 +67,6 @@ const Button: React.FC<Props> = ({
         <a href={href} onClick={onClick} role="button" style={style}>
           {children}
         </a>
-      </ButtonContainer>
-    );
-  }
-
-  if (type === "submit") {
-    return (
-      <ButtonContainer>
-        <input
-          type="submit"
-          value={children}
-          style={style}
-          disabled={disabled}
-        />
       </ButtonContainer>
     );
   }
