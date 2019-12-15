@@ -219,7 +219,7 @@ const Caluclate: React.FC<Props> = ({ location: { search } }) => {
                 id="averageDailyMiles"
                 name="averageDailyMiles"
                 inputType="number"
-                label="Average Daily Mileage"
+                label="Average Daily Mileage per Vehicle"
                 component={TableInput}
                 errors={errors}
                 touched={touched}
@@ -240,7 +240,7 @@ const Caluclate: React.FC<Props> = ({ location: { search } }) => {
                 name="averageDailyIdling"
                 inputType="number"
                 tooltip="The U.S. Department of Energy estimates average commerical idling of 2 hrs/vehicle/day"
-                label="Average Daily Idling"
+                label="Average Daily Idling per Vehicle"
                 component={TableInput}
                 errors={errors}
                 touched={touched}
@@ -250,7 +250,7 @@ const Caluclate: React.FC<Props> = ({ location: { search } }) => {
                 id="yearlyInsurancePremium"
                 name="yearlyInsurancePremium"
                 inputType="number"
-                label="Yearly Insurance Premium ($)"
+                label="Yearly Insurance Premium per Vehicle ($)"
                 component={TableInput}
                 errors={errors}
                 touched={touched}

@@ -14,7 +14,7 @@ const Container = styled.div`
   display: flex;
   position: relative;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   padding: 64px 0;
   min-height: calc(100vh - 140px);
@@ -130,6 +130,7 @@ const Home: React.FC<Props> = ({ history: { push } }) => {
                 type="submit"
                 style={{ marginTop: 55, zIndex: 99 }}
                 disabled={isSubmitting || !isValid || isEmpty(touched)}
+                value="Submit"
               />
             </div>
           </Form>

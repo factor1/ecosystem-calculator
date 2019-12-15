@@ -125,7 +125,7 @@ export class ContextProvider extends Component<
       hoursWorkedPerDay: 8,
       averageDailyMiles: 80,
       daysWorkedPerMonth: 20,
-      averageDailyIdling: 0,
+      averageDailyIdling: 2,
       yearlyInsurancePremium: 985,
       averageVehicleMPG: 18,
       insuranceDeductible: 500,
@@ -191,13 +191,11 @@ export class ContextProvider extends Component<
   };
 
   calculateAverageDailyIdling = () => {
-    const { fleetSize } = this.state;
+    const { fleetSize, averageDailyIdling } = this.state;
 
     if (!fleetSize) {
       return;
     }
-
-    const averageDailyIdling = Number(fleetSize) * 2;
 
     return this.setState({ averageDailyIdling });
   };
@@ -206,11 +204,15 @@ export class ContextProvider extends Component<
     const { averageDailyIdling, daysWorkedPerMonth, fleetSize } = this.state;
 
     if (!averageDailyIdling || !daysWorkedPerMonth || !fleetSize) {
+      console.log(averageDailyIdling);
+      console.log(daysWorkedPerMonth);
+      console.log(fleetSize);
+      console.log("Did not calc idle");
       return;
     }
 
     const idleCostBefore =
-      (averageDailyIdling / 60) * daysWorkedPerMonth * Number(fleetSize) * 0.9;
+      0.9 * averageDailyIdling * Number(fleetSize) * daysWorkedPerMonth;
 
     const idleCostAfter = idleCostBefore * 0.25;
 
@@ -222,7 +224,7 @@ export class ContextProvider extends Component<
     if (!fleetSize) {
       return null;
     }
-    const gpsInsightCost = -21.95 * Number(fleetSize);
+    const gpsInsightCost = 21.95 * Number(fleetSize);
 
     return this.setState({ gpsInsightCost });
   };
@@ -249,7 +251,7 @@ export class ContextProvider extends Component<
     const gallons = monthlyMileage / averageVehicleMPG;
     const fuelCostBefore = gallons * Number(fuelCost);
 
-    const fuelCostAfter = fuelCostBefore * 0.77;
+    const fuelCostAfter = fuelCostBefore * 0.67;
 
     return this.setState({ fuelCostBefore, fuelCostAfter });
   };
