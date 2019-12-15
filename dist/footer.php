@@ -51,5 +51,5 @@ if ( ! is_page_template( 'page-template-blank.php' ) ) : ?>
 
 	<?php wp_footer(); ?>
 </body>
-<script src="http://factor1.me/2019/gpsi/src.d9f70f79.js"></script>
+<script src="http://factor1.me/2019/gpsi/src.93642d18.js"></script>
 </html>
