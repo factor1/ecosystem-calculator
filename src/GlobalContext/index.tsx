@@ -191,13 +191,11 @@ export class ContextProvider extends Component<
   };
 
   calculateAverageDailyIdling = () => {
-    const { fleetSize } = this.state;
+    const { fleetSize, averageDailyIdling } = this.state;
 
     if (!fleetSize) {
       return;
     }
-
-    const averageDailyIdling = 2;
 
     return this.setState({ averageDailyIdling });
   };
