@@ -176,6 +176,7 @@ export class ContextProvider extends Component<
 
   runCalculations = () => {
     const initialValues = new Promise(resolve => {
+      this.calculateAccidentsPerYear();
       this.calculateAverageDailyIdling();
       this.calculateIdle();
       this.calculateGPSCost();
@@ -183,7 +184,6 @@ export class ContextProvider extends Component<
       this.calculateMaintenance();
       this.calculateProductivity();
       this.calculateAccidentCost();
-      this.calculateAccidentsPerYear();
       resolve();
     });
 
@@ -204,10 +204,6 @@ export class ContextProvider extends Component<
     const { averageDailyIdling, daysWorkedPerMonth, fleetSize } = this.state;
 
     if (!averageDailyIdling || !daysWorkedPerMonth || !fleetSize) {
-      console.log(averageDailyIdling);
-      console.log(daysWorkedPerMonth);
-      console.log(fleetSize);
-      console.log("Did not calc idle");
       return;
     }
 
@@ -313,24 +309,22 @@ export class ContextProvider extends Component<
 
   calculateAccidentCost = () => {
     const {
-      accidentsPerYear,
+      fleetSize,
       insuranceDeductible,
       yearlyInsurancePremium
     } = this.state;
+
+    const accidentsPerYear = Number((Number(fleetSize) * 0.2).toFixed(2));
 
     if (!accidentsPerYear || !insuranceDeductible || !yearlyInsurancePremium) {
       return null;
     }
 
     const accidentCostBefore =
-      accidentsPerYear * insuranceDeductible +
-      0.5 * yearlyInsurancePremium * accidentsPerYear;
-
-    const reducedAccidentRate = accidentsPerYear * 0.75;
+      insuranceDeductible * accidentsPerYear + yearlyInsurancePremium * 0.5;
 
     const accidentCostAfter =
-      reducedAccidentRate * insuranceDeductible +
-      reducedAccidentRate * yearlyInsurancePremium * 0.5;
+      0.75 * insuranceDeductible + 0.75 * 0.5 * yearlyInsurancePremium;
 
     return this.setState({ accidentCostBefore, accidentCostAfter });
   };

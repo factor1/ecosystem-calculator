@@ -16,12 +16,12 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  padding: 64px 0;
+  padding: 0 0 64px 0;
   min-height: calc(100vh - 140px);
   text-align: center;
 
   @media screen and (max-width: 768px) {
-    padding: 64px 18px;
+    padding: 0 18px 64px;
   }
 `;
 

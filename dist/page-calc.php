@@ -16,7 +16,11 @@ $is_page_builder_used = et_pb_is_pagebuilder_used( get_the_ID() ); ?>
 
 
 
-<div id="app">Loading... please wait.</div>
+<div id="app">
+	<div style="height: calc(100vh - 126px); display: flex; flex-direction: column; justify-content: center; align-items: center">
+		<p>Loading...</p>
+	</div>
+</div>
 
 
 

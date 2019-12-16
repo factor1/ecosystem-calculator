@@ -36,10 +36,10 @@
 	</script>
 
 	<?php wp_head(); ?>
-	
+
 	<script src="//app-ab10.marketo.com/js/forms2/js/forms2.min.js"></script>
-	<link rel="stylesheet" href="http://factor1.me/2019/gpsi/src.5bc08277.css">
-	
+	<link rel="stylesheet" href="http://factor1.me/2019/gpsi/src.3ec417c1.css">
+
 </head>
 <body <?php body_class(); ?>>
 	<div class="drawer js-drawer">
