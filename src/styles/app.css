@@ -72,3 +72,11 @@ html {
 .submit-btn button:disabled {
   background-color: #949494;
 }
+
+.page-template-page-calc #main-content .container::before {
+  display: none !important;
+}
+
+.page-template-page-calc #main-content .container {
+  width: 100% !important;
+}

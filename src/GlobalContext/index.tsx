@@ -125,7 +125,7 @@ export class ContextProvider extends Component<
       hoursWorkedPerDay: 8,
       averageDailyMiles: 80,
       daysWorkedPerMonth: 20,
-      averageDailyIdling: 0,
+      averageDailyIdling: 2,
       yearlyInsurancePremium: 985,
       averageVehicleMPG: 18,
       insuranceDeductible: 500,
@@ -176,6 +176,7 @@ export class ContextProvider extends Component<
 
   runCalculations = () => {
     const initialValues = new Promise(resolve => {
+      this.calculateAccidentsPerYear();
       this.calculateAverageDailyIdling();
       this.calculateIdle();
       this.calculateGPSCost();
@@ -183,7 +184,6 @@ export class ContextProvider extends Component<
       this.calculateMaintenance();
       this.calculateProductivity();
       this.calculateAccidentCost();
-      this.calculateAccidentsPerYear();
       resolve();
     });
 
@@ -191,13 +191,11 @@ export class ContextProvider extends Component<
   };
 
   calculateAverageDailyIdling = () => {
-    const { fleetSize } = this.state;
+    const { fleetSize, averageDailyIdling } = this.state;
 
     if (!fleetSize) {
       return;
     }
-
-    const averageDailyIdling = Number(fleetSize) * 2;
 
     return this.setState({ averageDailyIdling });
   };
@@ -210,7 +208,7 @@ export class ContextProvider extends Component<
     }
 
     const idleCostBefore =
-      (averageDailyIdling / 60) * daysWorkedPerMonth * Number(fleetSize) * 0.9;
+      0.9 * averageDailyIdling * Number(fleetSize) * daysWorkedPerMonth;
 
     const idleCostAfter = idleCostBefore * 0.25;
 
@@ -222,7 +220,7 @@ export class ContextProvider extends Component<
     if (!fleetSize) {
       return null;
     }
-    const gpsInsightCost = -21.95 * Number(fleetSize);
+    const gpsInsightCost = 21.95 * Number(fleetSize);
 
     return this.setState({ gpsInsightCost });
   };
@@ -249,7 +247,7 @@ export class ContextProvider extends Component<
     const gallons = monthlyMileage / averageVehicleMPG;
     const fuelCostBefore = gallons * Number(fuelCost);
 
-    const fuelCostAfter = fuelCostBefore * 0.77;
+    const fuelCostAfter = fuelCostBefore * 0.67;
 
     return this.setState({ fuelCostBefore, fuelCostAfter });
   };
@@ -311,24 +309,22 @@ export class ContextProvider extends Component<
 
   calculateAccidentCost = () => {
     const {
-      accidentsPerYear,
+      fleetSize,
       insuranceDeductible,
       yearlyInsurancePremium
     } = this.state;
+
+    const accidentsPerYear = Number((Number(fleetSize) * 0.2).toFixed(2));
 
     if (!accidentsPerYear || !insuranceDeductible || !yearlyInsurancePremium) {
       return null;
     }
 
     const accidentCostBefore =
-      accidentsPerYear * insuranceDeductible +
-      0.5 * yearlyInsurancePremium * accidentsPerYear;
-
-    const reducedAccidentRate = accidentsPerYear * 0.75;
+      insuranceDeductible * accidentsPerYear + yearlyInsurancePremium * 0.5;
 
     const accidentCostAfter =
-      reducedAccidentRate * insuranceDeductible +
-      reducedAccidentRate * yearlyInsurancePremium * 0.5;
+      0.75 * insuranceDeductible + 0.75 * 0.5 * yearlyInsurancePremium;
 
     return this.setState({ accidentCostBefore, accidentCostAfter });
   };

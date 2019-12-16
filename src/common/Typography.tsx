@@ -66,6 +66,7 @@ export const Heading4: React.FC<TypographyProps> = ({
     letter-spacing: 0.6px;
     text-align: ${textAlign};
     color: ${color ? color : colors.midGrey};
+    margin: 14px auto 32px;
     @media screen and (max-width: 768px) {
       font: 400 16px/19px Lato;
       letter-spacing: 0.4px;

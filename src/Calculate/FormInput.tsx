@@ -56,13 +56,13 @@ const Input = styled.input`
   flex: 0 1 401px;
   height: 100%;
   appearance: none;
-  border: none;
+  border: none !important;
   border-radius: 0px 4px 4px 0px;
-  background-color: ${colors.lightGrey};
+  background-color: ${colors.lightGrey} !important;
   font: 400 20px/24px Lato;
-  color: ${colors.blue};
+  color: ${colors.blue} !important;
   text-align: left;
-  padding: 0 30px;
+  padding: 0 10px !important;
 
   @media screen and (max-width: 768px) {
     font: 400 14px/17px Lato;
@@ -79,7 +79,21 @@ const ErrorMessage = styled.div`
   max-width: 608px;
   font: 400 16px/19px Lato;
   letter-spacing: 0.4px;
-  margin-left: 158px;
+  margin-top: 10px;
+  padding-left: 30px;
+`;
+
+const Root = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 608px;
+  margin: 0 auto;
+  @media screen and (max-width: 768px) {
+    max-width: 380px;
+  }
 `;
 
 const FormInput: React.FC<Props> = ({
@@ -92,7 +106,7 @@ const FormInput: React.FC<Props> = ({
   errors
 }) => {
   return (
-    <>
+    <Root>
       <Container>
         <Label htmlFor={id}>{label}</Label>
         <Input id={id} type={type} name={name} {...field} />
@@ -100,7 +114,7 @@ const FormInput: React.FC<Props> = ({
       {touched[field.name] && errors[field.name] ? (
         <ErrorMessage>{errors[field.name]}</ErrorMessage>
       ) : null}
-    </>
+    </Root>
   );
 };
 

@@ -34,6 +34,7 @@ const StyledInput = styled.div`
     width: 100%;
     -moz-appearance: textfield;
     overflow: hidden;
+    padding: 0;
     &::placeholder {
       color: ${colors.lightGrey};
     }
