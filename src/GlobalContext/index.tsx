@@ -317,8 +317,6 @@ export class ContextProvider extends Component<
       accidentsPerYear
     } = this.state;
 
-    // const accidentsPerYear = Number((Number(fleetSize) * 0.2).toFixed(2));
-
     if (!accidentsPerYear || !insuranceDeductible || !yearlyInsurancePremium) {
       return null;
     }
