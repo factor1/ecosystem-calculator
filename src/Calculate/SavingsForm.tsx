@@ -125,7 +125,6 @@ const SavingsForm: React.FC = () => {
           )
         })}
         onSubmit={(values, actions) => {
-          console.log(values);
           try {
             // @ts-ignore
             MktoForms2.whenReady(function(mktoForm: any) {
@@ -133,7 +132,7 @@ const SavingsForm: React.FC = () => {
               mktoForm.submit();
               mktoForm.onSuccess(() => {
                 actions.setSubmitting(false);
-                console.log("success");
+                console.log("Form data sent");
               });
             });
           } catch (error) {
