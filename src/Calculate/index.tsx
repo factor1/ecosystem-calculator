@@ -187,6 +187,7 @@ const Caluclate: React.FC<Props> = ({ location: { search } }) => {
             .required("Accidents per year is required")
         })}
         onSubmit={(values, actions) => {
+          console.log(values);
           handleFormSubmit(values);
           actions.setSubmitting(false);
         }}
@@ -219,7 +220,7 @@ const Caluclate: React.FC<Props> = ({ location: { search } }) => {
                 id="averageDailyMiles"
                 name="averageDailyMiles"
                 inputType="number"
-                label="Average Daily Mileage per Vehicle"
+                label="Mileage/Vehicle/Day"
                 component={TableInput}
                 errors={errors}
                 touched={touched}
@@ -240,7 +241,7 @@ const Caluclate: React.FC<Props> = ({ location: { search } }) => {
                 name="averageDailyIdling"
                 inputType="number"
                 tooltip="The U.S. Department of Energy estimates average commerical idling of 2 hrs/vehicle/day"
-                label="Average Daily Idling per Vehicle"
+                label="Idling Hours/Vehicle/Day"
                 component={TableInput}
                 errors={errors}
                 touched={touched}
@@ -250,7 +251,7 @@ const Caluclate: React.FC<Props> = ({ location: { search } }) => {
                 id="yearlyInsurancePremium"
                 name="yearlyInsurancePremium"
                 inputType="number"
-                label="Yearly Insurance Premium per Vehicle ($)"
+                label="Insurance Premium/Vehicle/Year ($)"
                 component={TableInput}
                 errors={errors}
                 touched={touched}
@@ -281,7 +282,7 @@ const Caluclate: React.FC<Props> = ({ location: { search } }) => {
                 name="accidentsPerYear"
                 inputType="number"
                 tooltip="Commercial vehicles have an annual accident rate of 20%, according to the National Safety Council"
-                label="Accidents per Year"
+                label="Accidents/Year (Total Fleet)"
                 component={TableInput}
                 errors={errors}
                 touched={touched}
