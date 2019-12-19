@@ -187,7 +187,6 @@ const Caluclate: React.FC<Props> = ({ location: { search } }) => {
             .required("Accidents per year is required")
         })}
         onSubmit={(values, actions) => {
-          console.log(values);
           handleFormSubmit(values);
           actions.setSubmitting(false);
         }}
