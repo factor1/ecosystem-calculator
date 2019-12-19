@@ -119,31 +119,31 @@ export class ContextProvider extends Component<
     super(props);
 
     this.state = {
-      fleetSize: null,
-      averageWage: null,
-      fuelCost: 0,
-      hoursWorkedPerDay: 8,
-      averageDailyMiles: 80,
-      daysWorkedPerMonth: 20,
-      averageDailyIdling: 2,
-      yearlyInsurancePremium: 985,
-      averageVehicleMPG: 18,
-      insuranceDeductible: 500,
-      accidentsPerYear: 0,
-      idleCostBefore: 0,
-      idleCostAfter: 0,
-      gpsInsightCost: 0.0,
-      fuelCostBefore: 0.0,
-      fuelCostAfter: 0.0,
-      maintenanceBefore: 0.0,
-      maintenanceAfter: 0.0,
-      productivityLostBefore: 0.0,
-      productivityLostAfter: 0.0,
-      accidentCostBefore: 0.0,
       accidentCostAfter: 0.0,
-      totalCostBefore: 0.0,
+      accidentCostBefore: 0.0,
+      accidentsPerYear: null,
+      averageDailyIdling: 2,
+      averageDailyMiles: 80,
+      averageVehicleMPG: 18,
+      averageWage: null,
+      daysWorkedPerMonth: 20,
+      fleetSize: null,
+      fuelCost: 0,
+      fuelCostAfter: 0.0,
+      fuelCostBefore: 0.0,
+      gpsInsightCost: 0.0,
+      hoursWorkedPerDay: 8,
+      idleCostAfter: 0,
+      idleCostBefore: 0,
+      insuranceDeductible: 500,
+      maintenanceAfter: 0.0,
+      maintenanceBefore: 0.0,
+      monthlySavings: 0.0,
+      productivityLostAfter: 0.0,
+      productivityLostBefore: 0.0,
       totalCostAfter: 0.0,
-      monthlySavings: 0.0
+      totalCostBefore: 0.0,
+      yearlyInsurancePremium: 985
     };
   }
 
@@ -168,7 +168,7 @@ export class ContextProvider extends Component<
   };
 
   handleFormSubmit = (values: FormValues) => {
-    return this.setState({ ...values }, () => this.runCalculations());
+    this.setState({ ...values }, () => this.runCalculations());
   };
 
   handleInitialFormSubmit = (values: InitialFormValues) =>
@@ -183,7 +183,7 @@ export class ContextProvider extends Component<
       this.calculateFuelCosts();
       this.calculateMaintenance();
       this.calculateProductivity();
-      this.calculateAccidentCost();
+      setTimeout(() => this.calculateAccidentCost(), 10);
       resolve();
     });
 
@@ -297,24 +297,27 @@ export class ContextProvider extends Component<
   };
 
   calculateAccidentsPerYear = () => {
-    const { fleetSize } = this.state;
+    const { fleetSize, accidentsPerYear } = this.state;
     if (!fleetSize) {
       return null;
     }
 
-    const accidentsPerYear = Number((Number(fleetSize) * 0.2).toFixed(2));
-
-    return this.setState({ accidentsPerYear });
+    if (!accidentsPerYear) {
+      const accidentsPerYear = Number((Number(fleetSize) * 0.2).toFixed(2));
+      this.setState({ accidentsPerYear });
+    } else {
+      this.setState({ accidentsPerYear });
+    }
   };
 
   calculateAccidentCost = () => {
     const {
-      fleetSize,
       insuranceDeductible,
-      yearlyInsurancePremium
+      yearlyInsurancePremium,
+      accidentsPerYear
     } = this.state;
 
-    const accidentsPerYear = Number((Number(fleetSize) * 0.2).toFixed(2));
+    // const accidentsPerYear = Number((Number(fleetSize) * 0.2).toFixed(2));
 
     if (!accidentsPerYear || !insuranceDeductible || !yearlyInsurancePremium) {
       return null;

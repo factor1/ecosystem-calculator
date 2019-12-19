@@ -114,7 +114,7 @@ const CostBreakdown: React.FC = () => {
 
   return (
     <Container>
-      <Heading3>Cost Breakdown Analysis</Heading3>
+      <Heading3>Monthly Costs Breakdown</Heading3>
       <Grid>
         <BeforeHeading>Cost Before GPS Insight</BeforeHeading>
         <AfterHeading>Cost After GPS Insight</AfterHeading>
