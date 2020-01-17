@@ -174,161 +174,182 @@ export class ContextProvider extends Component<
   handleInitialFormSubmit = (values: InitialFormValues) =>
     this.setState({ ...values }, () => this.runCalculations());
 
-  runCalculations = () => {
-    const initialValues = new Promise(resolve => {
-      this.calculateAccidentsPerYear();
-      this.calculateAverageDailyIdling();
-      this.calculateIdle();
-      this.calculateGPSCost();
-      this.calculateFuelCosts();
-      this.calculateMaintenance();
-      this.calculateProductivity();
-      setTimeout(() => this.calculateAccidentCost(), 10);
-      resolve();
+  runCalculations = async () => {
+    await this.calculateAccidentsPerYear();
+    await this.calculateAverageDailyIdling();
+    await this.calculateIdle();
+    await this.calculateGPSCost();
+    await this.calculateFuelCosts();
+    await this.calculateMaintenance();
+    await this.calculateProductivity();
+    await this.calculateAccidentCost();
+    this.calculateTotals();
+  };
+
+  calculateAverageDailyIdling = () =>
+    new Promise(resolve => {
+      const { fleetSize, averageDailyIdling } = this.state;
+
+      if (!fleetSize) {
+        console.error("calculateAverageDailyIdling FAILED!");
+        return;
+      }
+
+      return this.setState({ averageDailyIdling }, () => resolve());
     });
 
-    initialValues.then(() => this.calculateTotals());
-  };
+  calculateIdle = () =>
+    new Promise(resolve => {
+      const { averageDailyIdling, daysWorkedPerMonth, fleetSize } = this.state;
 
-  calculateAverageDailyIdling = () => {
-    const { fleetSize, averageDailyIdling } = this.state;
+      if (!averageDailyIdling || !daysWorkedPerMonth || !fleetSize) {
+        console.error("calculateIdle FAILED!");
+        return;
+      }
 
-    if (!fleetSize) {
-      return;
-    }
+      const idleCostBefore =
+        0.9 * averageDailyIdling * Number(fleetSize) * daysWorkedPerMonth;
 
-    return this.setState({ averageDailyIdling });
-  };
+      const idleCostAfter = idleCostBefore * 0.25;
 
-  calculateIdle = () => {
-    const { averageDailyIdling, daysWorkedPerMonth, fleetSize } = this.state;
+      return this.setState({ idleCostBefore, idleCostAfter }, () => resolve());
+    });
 
-    if (!averageDailyIdling || !daysWorkedPerMonth || !fleetSize) {
-      return;
-    }
+  calculateGPSCost = () =>
+    new Promise(resolve => {
+      const { fleetSize } = this.state;
+      if (!fleetSize) {
+        console.error("calculateGPSCost FAILED!");
+        return null;
+      }
+      const gpsInsightCost = 21.95 * Number(fleetSize);
 
-    const idleCostBefore =
-      0.9 * averageDailyIdling * Number(fleetSize) * daysWorkedPerMonth;
+      return this.setState({ gpsInsightCost }, () => resolve());
+    });
 
-    const idleCostAfter = idleCostBefore * 0.25;
+  calculateFuelCosts = () =>
+    new Promise(resolve => {
+      const {
+        fleetSize,
+        averageDailyMiles,
+        daysWorkedPerMonth,
+        averageVehicleMPG,
+        fuelCost
+      } = this.state;
+      if (
+        !fleetSize ||
+        !averageDailyMiles ||
+        !daysWorkedPerMonth ||
+        !averageVehicleMPG ||
+        !fuelCost
+      ) {
+        console.error("calculateFuelCosts FAILED!");
+        return null;
+      }
+      const monthlyMileage =
+        Number(fleetSize) * averageDailyMiles * daysWorkedPerMonth;
+      const gallons = monthlyMileage / averageVehicleMPG;
+      const fuelCostBefore = gallons * Number(fuelCost);
 
-    return this.setState({ idleCostBefore, idleCostAfter });
-  };
+      const fuelCostAfter = fuelCostBefore * 0.67;
 
-  calculateGPSCost = () => {
-    const { fleetSize } = this.state;
-    if (!fleetSize) {
-      return null;
-    }
-    const gpsInsightCost = 21.95 * Number(fleetSize);
+      return this.setState({ fuelCostBefore, fuelCostAfter }, () => resolve());
+    });
 
-    return this.setState({ gpsInsightCost });
-  };
+  calculateMaintenance = () =>
+    new Promise(resolve => {
+      const { fleetSize, averageDailyMiles, daysWorkedPerMonth } = this.state;
 
-  calculateFuelCosts = () => {
-    const {
-      fleetSize,
-      averageDailyMiles,
-      daysWorkedPerMonth,
-      averageVehicleMPG,
-      fuelCost
-    } = this.state;
-    if (
-      !fleetSize ||
-      !averageDailyMiles ||
-      !daysWorkedPerMonth ||
-      !averageVehicleMPG ||
-      !fuelCost
-    ) {
-      return null;
-    }
-    const monthlyMileage =
-      Number(fleetSize) * averageDailyMiles * daysWorkedPerMonth;
-    const gallons = monthlyMileage / averageVehicleMPG;
-    const fuelCostBefore = gallons * Number(fuelCost);
+      if (!fleetSize || !averageDailyMiles || !daysWorkedPerMonth) {
+        console.error("calculateMaintenance FAILED!");
+        return null;
+      }
+      const monthlyMileage =
+        Number(fleetSize) * averageDailyMiles * daysWorkedPerMonth;
+      const maintenanceBefore = 0.1 * monthlyMileage;
 
-    const fuelCostAfter = fuelCostBefore * 0.67;
+      const maintenanceAfter = maintenanceBefore * 0.75;
 
-    return this.setState({ fuelCostBefore, fuelCostAfter });
-  };
+      this.setState({ maintenanceBefore, maintenanceAfter }, () => resolve());
+    });
 
-  calculateMaintenance = () => {
-    const { fleetSize, averageDailyMiles, daysWorkedPerMonth } = this.state;
+  calculateProductivity = () =>
+    new Promise(resolve => {
+      const {
+        averageWage,
+        daysWorkedPerMonth,
+        hoursWorkedPerDay,
+        fleetSize
+      } = this.state;
 
-    if (!fleetSize || !averageDailyMiles || !daysWorkedPerMonth) {
-      return null;
-    }
-    const monthlyMileage =
-      Number(fleetSize) * averageDailyMiles * daysWorkedPerMonth;
-    const maintenanceBefore = 0.1 * monthlyMileage;
+      if (
+        !averageWage ||
+        !daysWorkedPerMonth ||
+        !hoursWorkedPerDay ||
+        !fleetSize
+      ) {
+        console.error("calculateProductivity FAILED!");
+        return null;
+      }
 
-    const maintenanceAfter = maintenanceBefore * 0.75;
+      const productivityLostBefore =
+        Number(averageWage) *
+        daysWorkedPerMonth *
+        hoursWorkedPerDay *
+        0.125 *
+        Number(fleetSize);
 
-    this.setState({ maintenanceBefore, maintenanceAfter });
-  };
+      const productivityLostAfter = productivityLostBefore / 2;
 
-  calculateProductivity = () => {
-    const {
-      averageWage,
-      daysWorkedPerMonth,
-      hoursWorkedPerDay,
-      fleetSize
-    } = this.state;
+      return this.setState(
+        { productivityLostBefore, productivityLostAfter },
+        () => resolve()
+      );
+    });
 
-    if (
-      !averageWage ||
-      !daysWorkedPerMonth ||
-      !hoursWorkedPerDay ||
-      !fleetSize
-    ) {
-      return null;
-    }
+  calculateAccidentsPerYear = () =>
+    new Promise(resolve => {
+      const { fleetSize, accidentsPerYear } = this.state;
+      if (!fleetSize) {
+        console.error("calculateAccidentsPerYear FAILED!");
+        return null;
+      }
 
-    const productivityLostBefore =
-      Number(averageWage) *
-      daysWorkedPerMonth *
-      hoursWorkedPerDay *
-      0.125 *
-      Number(fleetSize);
+      if (!accidentsPerYear) {
+        const accidentsPerYear = Number((Number(fleetSize) * 0.2).toFixed(2));
+        this.setState({ accidentsPerYear }, () => resolve());
+      } else {
+        this.setState({ accidentsPerYear }, () => resolve());
+      }
+    });
 
-    const productivityLostAfter = productivityLostBefore / 2;
+  calculateAccidentCost = () =>
+    new Promise(resolve => {
+      const {
+        insuranceDeductible,
+        yearlyInsurancePremium,
+        accidentsPerYear
+      } = this.state;
 
-    return this.setState({ productivityLostBefore, productivityLostAfter });
-  };
+      if (
+        !accidentsPerYear ||
+        !insuranceDeductible ||
+        !yearlyInsurancePremium
+      ) {
+        console.error("accident cost failed");
+        return null;
+      }
 
-  calculateAccidentsPerYear = () => {
-    const { fleetSize, accidentsPerYear } = this.state;
-    if (!fleetSize) {
-      return null;
-    }
+      const accidentCostBefore =
+        insuranceDeductible * accidentsPerYear + yearlyInsurancePremium * 0.5;
 
-    if (!accidentsPerYear) {
-      const accidentsPerYear = Number((Number(fleetSize) * 0.2).toFixed(2));
-      this.setState({ accidentsPerYear });
-    } else {
-      this.setState({ accidentsPerYear });
-    }
-  };
+      const accidentCostAfter =
+        0.75 * insuranceDeductible + 0.75 * 0.5 * yearlyInsurancePremium;
 
-  calculateAccidentCost = () => {
-    const {
-      insuranceDeductible,
-      yearlyInsurancePremium,
-      accidentsPerYear
-    } = this.state;
-
-    if (!accidentsPerYear || !insuranceDeductible || !yearlyInsurancePremium) {
-      return null;
-    }
-
-    const accidentCostBefore =
-      insuranceDeductible * accidentsPerYear + yearlyInsurancePremium * 0.5;
-
-    const accidentCostAfter =
-      0.75 * insuranceDeductible + 0.75 * 0.5 * yearlyInsurancePremium;
-
-    return this.setState({ accidentCostBefore, accidentCostAfter });
-  };
+      return this.setState({ accidentCostBefore, accidentCostAfter }, () =>
+        resolve()
+      );
+    });
 
   calculateTotals = () => {
     const {
