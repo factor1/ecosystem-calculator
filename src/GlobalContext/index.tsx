@@ -32,6 +32,7 @@ interface ContextState {
   totalCostBefore: number;
   totalCostAfter: number;
   monthlySavings: number;
+  insideSale: boolean;
 }
 
 interface ContextValues {
@@ -62,6 +63,8 @@ interface ContextValues {
   totalCostBefore: number;
   totalCostAfter: number;
   monthlySavings: number;
+  insideSale: boolean;
+  handleInsideSale: (value: boolean) => void;
 }
 
 interface FormValues {
@@ -108,7 +111,9 @@ export const CalculatorContext = React.createContext<ContextValues>({
   accidentCostAfter: 0.0,
   totalCostBefore: 0.0,
   totalCostAfter: 0.0,
-  monthlySavings: 0.0
+  monthlySavings: 0.0,
+  insideSale: false,
+  handleInsideSale: () => null
 });
 
 export class ContextProvider extends Component<
@@ -143,7 +148,8 @@ export class ContextProvider extends Component<
       productivityLostBefore: 0.0,
       totalCostAfter: 0.0,
       totalCostBefore: 0.0,
-      yearlyInsurancePremium: 985
+      yearlyInsurancePremium: 985,
+      insideSale: false
     };
   }
 
@@ -388,6 +394,10 @@ export class ContextProvider extends Component<
     return this.setState({ totalCostBefore, totalCostAfter, monthlySavings });
   };
 
+  handleInsideSale = (value: boolean) => {
+    return this.setState({ insideSale: value });
+  };
+
   render() {
     const {
       fleetSize,
@@ -414,7 +424,8 @@ export class ContextProvider extends Component<
       accidentCostAfter,
       totalCostBefore,
       totalCostAfter,
-      monthlySavings
+      monthlySavings,
+      insideSale
     } = this.state;
     return (
       <CalculatorContext.Provider
@@ -445,7 +456,9 @@ export class ContextProvider extends Component<
           accidentCostAfter,
           totalCostBefore,
           totalCostAfter,
-          monthlySavings
+          monthlySavings,
+          insideSale,
+          handleInsideSale: this.handleInsideSale
         }}
       >
         {this.props.children}

@@ -1,8 +1,9 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import styled from "styled-components";
 import * as Yup from "yup";
 import { Formik, Form, Field } from "formik";
 import isEmpty from "lodash/isEmpty";
+import queryString from "query-string";
 
 import { CalculatorContext } from "../GlobalContext";
 import { colors } from "../styles/theme";
@@ -70,10 +71,23 @@ interface Props {
   history: {
     push: (value: string) => void;
   };
+  location: {
+    search: string;
+  };
 }
 
-const Home: React.FC<Props> = ({ history: { push } }) => {
-  const { handleInitialFormSubmit } = useContext(CalculatorContext);
+const Home: React.FC<Props> = ({ history: { push }, location: { search } }) => {
+  const { handleInitialFormSubmit, handleInsideSale } = useContext(
+    CalculatorContext
+  );
+
+  useEffect(() => {
+    const queryStrings: any = queryString.parse(search);
+
+    if (queryStrings.insideSale) {
+      return handleInsideSale(true);
+    }
+  }, [search]);
   return (
     <Container>
       <Heading2>Savings Calculator</Heading2>

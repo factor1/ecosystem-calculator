@@ -1,10 +1,9 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import toString from "lodash/toString";
 import split from "lodash/split";
-import queryString from "query-string";
 
 import { Heading3, Heading5, Heading4 } from "../common/Typography";
 import { colors } from "../styles/theme";
@@ -85,19 +84,7 @@ const FormWrapper = styled.div`
   }
 `;
 
-interface Props {
-  location: {
-    search: string;
-  };
-}
-
-interface State {
-  queryStrings: {
-    insideSale: boolean;
-  } | null;
-}
-
-const Caluclate: React.FC<Props> = ({ location: { search } }) => {
+const Caluclate: React.FC = () => {
   const {
     hoursWorkedPerDay,
     averageDailyMiles,
@@ -109,15 +96,9 @@ const Caluclate: React.FC<Props> = ({ location: { search } }) => {
     accidentsPerYear,
     fuelCost,
     handleFormSubmit,
-    monthlySavings
+    monthlySavings,
+    insideSale
   } = useContext(CalculatorContext);
-
-  const [queryStrings, setQueryStrings] = useState({ insideSale: false });
-
-  useEffect(() => {
-    const queryStrings: any = queryString.parse(search);
-    return setQueryStrings(queryStrings);
-  }, [search]);
 
   const renderMonthlySavings = (value: "dollar" | "cents") => {
     const transformedSavings = split(toString(monthlySavings.toFixed(2)), ".");
@@ -292,7 +273,7 @@ const Caluclate: React.FC<Props> = ({ location: { search } }) => {
         )}
       </Formik>
       <CostBreakdown />
-      {!queryStrings.insideSale ? <SavingsForm /> : null}
+      {!insideSale ? <SavingsForm /> : null}
     </Container>
   );
 };
