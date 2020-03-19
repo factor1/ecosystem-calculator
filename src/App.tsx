@@ -12,7 +12,7 @@ const App: React.FC = () => {
   return (
     <div>
       <ContextProvider>
-        <Router basename="/calculator">
+        <Router basename="/landing/ecosystem-calculator">
           <Route exact path="/" component={Home} />
           <Route exact path="/calculate" component={Calculate} />
         </Router>
